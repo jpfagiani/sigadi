@@ -1536,6 +1536,178 @@
         #sgf-intro .intro-titulo { font-size: 12.5px; letter-spacing: 1.5px; } }
     @media (prefers-reduced-motion: reduce) { #sgf-intro *, #sgf-intro *::after { animation: none !important; } }
     @media print { #sgf-intro { display: none !important; } }
+
+    
+    /* ══════════════════════════════════════════════════════════════
+       SIGADI — ESTRUTURA DE APLICATIVO PROFISSIONAL
+       (barra lateral escura + barra superior + menu do usuário)
+       ══════════════════════════════════════════════════════════════ */
+    .app-layout { --sb-w: 292px; --sb-w-min: 78px; --tb-h: 62px; background: #eef2f7; position: relative; width: 100vw; height: 100vh; }
+    .sb-overlay { display: none; }
+
+    /* ---------- Barra lateral (Design Claro e Profissional estilo Windows Fluent) ---------- */
+    .app-layout .sidebar {
+        width: var(--sb-w); min-width: var(--sb-w); height: 100vh;
+        background: #f8fafc;
+        color: #334155; border-right: 1px solid #e2e8f0;
+        box-shadow: 2px 0 12px rgba(15,23,42,.04);
+        display: flex; flex-direction: column; overflow: hidden; z-index: 60;
+        transition: width .22s ease, min-width .22s ease;
+    }
+    .sb-brand { display: flex; align-items: center; gap: 12px; padding: 0 18px; min-height: var(--tb-h);
+        border-bottom: 1px solid #e2e8f0; flex-shrink: 0; background: #ffffff; }
+    .sb-logo { width: 38px; height: 38px; object-fit: contain; background: #f1f5f9; border-radius: 8px; padding: 4px; border: 1px solid #cbd5e1; flex-shrink: 0; }
+    .sb-brand-text strong { display: block; font-size: 18px; letter-spacing: 2px; color: #0f172a; font-weight: 800; line-height: 1; }
+    .sb-brand-text span { display: block; margin-top: 4px; font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+        color: #64748b; font-weight: 600; line-height: 1.3; }
+    .sb-org { padding: 10px 18px; font-size: 11px; color: #475569; line-height: 1.45; flex-shrink: 0;
+        border-bottom: 1px solid #e2e8f0; background: #f1f5f9; font-weight: 500; }
+
+    .app-layout .sidebar-nav { flex: 1 1 auto; min-height: 0; padding: 14px 12px 8px; gap: 0; display: flex; flex-direction: column;
+        overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+    .sb-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #64748b; padding: 4px 10px 10px; flex-shrink: 0; }
+    .sb-modules { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-evenly; gap: 4px; }
+
+    .app-layout .menu-category { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 56px; max-height: 84px; }
+    .app-layout .menu-category:has(.submenu-container.open) { flex: 0 0 auto; max-height: none; }
+
+    .app-layout .menu-header-button, .app-layout .sidebar-nav > .tab-button {
+        position: relative; flex: 1 1 auto; min-height: 50px; width: 100%; display: flex; align-items: center; justify-content: space-between;
+        padding: 0 12px; background: transparent; border: 1px solid transparent; border-radius: 10px; color: #334155;
+        font-size: 13.5px; font-weight: 600; letter-spacing: 0; cursor: pointer; text-align: left; transition: all .15s ease;
+    }
+    .app-layout .menu-header-button > span { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .app-layout .menu-header-button > span i, .app-layout .sidebar-nav > .tab-button > i {
+        width: 34px; height: 34px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+        background: #ffffff; color: #0284c7; font-size: 14px; flex-shrink: 0; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(15,23,42,.04); transition: .15s; }
+    .app-layout .sidebar-nav > .tab-button { justify-content: flex-start; gap: 12px; flex: 0 0 auto; }
+    .app-layout .menu-header-button:hover, .app-layout .sidebar-nav > .tab-button:hover { background: #ffffff; color: #0f172a; border-color: #cbd5e1; box-shadow: 0 2px 5px rgba(15,23,42,.05); }
+    .app-layout .arrow-icon { font-size: 11px; color: #94a3b8; }
+    .app-layout .menu-header-button.active-header, .app-layout .sidebar-nav > .tab-button.active {
+        background: #ffffff; color: #0284c7; border-color: #93c5fd; box-shadow: 0 2px 6px rgba(37,99,235,.08); font-weight: 700; }
+    .app-layout .menu-header-button.active-header::before, .app-layout .sidebar-nav > .tab-button.active::before {
+        content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3.5px; border-radius: 0 4px 4px 0; background: #0284c7; }
+    .app-layout .menu-header-button.active-header > span i, .app-layout .sidebar-nav > .tab-button.active > i {
+        background: #0284c7; color: #ffffff; border-color: #0284c7; box-shadow: 0 2px 6px rgba(2,132,199,.3); }
+
+    .app-layout .submenu-container { display: none; flex-direction: column; gap: 3px; margin: 4px 0 6px 20px; padding: 2px 0 2px 10px;
+        border-left: 2px solid #e2e8f0; }
+    .app-layout .submenu-container.open { display: flex; }
+    .app-layout .submenu-container .tab-button {
+        display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 6px 12px; border: 1px solid transparent; background: transparent;
+        border-radius: 8px; font-size: 13px; font-weight: 500; color: #475569; text-align: left; line-height: 1.3; white-space: normal; box-shadow: none; transition: all .15s; }
+    .app-layout .submenu-container .tab-button i { width: 16px; text-align: center; font-size: 12px; color: #64748b; }
+    .app-layout .submenu-container .tab-button:hover { background: #ffffff; color: #0f172a; border-color: #e2e8f0; box-shadow: 0 1px 3px rgba(15,23,42,.04); }
+    .app-layout .submenu-container .tab-button.active { background: #eff6ff; color: #1d4ed8; font-weight: 700; border-color: #bfdbfe; }
+    .app-layout .submenu-container .tab-button.active i { color: #1d4ed8; }
+    .sb-admin-label { margin-top: 14px; }
+
+    .app-layout .sidebar-footer { flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; padding: 12px;
+        border-top: 1px solid #e2e8f0; background: #ffffff; }
+    .sb-user { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .app-layout .sgf-avatar { width: 36px; height: 36px; font-size: 13px; box-shadow: 0 0 0 1px #cbd5e1; background: #f1f5f9; color: #1e293b; }
+    .app-layout .sgf-user-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+    .app-layout .sb-user #info-nome-user { color: #0f172a; font-size: 12.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .app-layout .sgf-nivel { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+    .app-layout .sgf-nivel.sgf-nivel-master { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+    .app-layout .sgf-nivel.sgf-nivel-administrador { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+    .sb-logout { margin-left: auto; width: 34px; height: 34px; flex-shrink: 0; border-radius: 8px; border: 1px solid #fecaca;
+        background: #fef2f2; color: #dc2626; cursor: pointer; font-size: 13px; transition: .15s; }
+    .sb-logout:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
+    .sb-credits { font-size: 10.5px; color: #64748b; text-align: center; line-height: 1.55; border-top: 1px solid #e2e8f0; padding-top: 8px; }
+    .sb-credits b { color: #334155; font-weight: 700; }
+
+    /* ---------- Barra superior ---------- */
+    .app-layout .main-content { padding: 0 32px 32px; background: #eef2f7; }
+    .app-topbar { position: sticky; top: 0; z-index: 45; margin: 0 -32px 22px; padding: 0 24px 0 20px; height: var(--tb-h);
+        display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,.94); backdrop-filter: blur(8px);
+        border-bottom: 1px solid #dbe3ee; box-shadow: 0 1px 3px rgba(15,23,42,.05); }
+    .tb-icon-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid #dbe3ee; background: #fff; color: #475569; cursor: pointer;
+        display: inline-flex; align-items: center; justify-content: center; font-size: 15px; transition: .15s; flex-shrink: 0; }
+    .tb-icon-btn:hover { background: #eff6ff; border-color: #93c5fd; color: #1e40af; }
+    .tb-crumbs { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748b; min-width: 0; white-space: nowrap; }
+    .tb-crumbs i { font-size: 9px; color: #94a3b8; }
+    .tb-crumbs strong { color: #0f172a; font-size: 15px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+    .tb-search { position: relative; flex: 1; max-width: 460px; margin: 0 auto; }
+    .tb-search > i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 13px; pointer-events: none; }
+    .tb-search input { width: 100%; height: 38px; padding: 0 54px 0 36px; border-radius: 10px; border: 1px solid #dbe3ee; background: #f1f5f9;
+        font-size: 13px; color: #0f172a; outline: none; transition: .15s; }
+    .tb-search input:focus { background: #fff; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
+    .tb-search kbd { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font: 600 10px 'Segoe UI', sans-serif; color: #64748b;
+        background: #fff; border: 1px solid #cbd5e1; border-radius: 5px; padding: 2px 6px; pointer-events: none; }
+    .tb-search-results { display: none; position: absolute; top: 44px; left: 0; right: 0; background: #fff; border: 1px solid #dbe3ee;
+        border-radius: 12px; box-shadow: 0 18px 40px rgba(15,23,42,.18); padding: 6px; max-height: 340px; overflow: auto; z-index: 80; }
+    .tb-search-results.show { display: block; }
+    .tb-res { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; cursor: pointer; font-size: 13px; color: #0f172a; }
+    .tb-res i { width: 18px; text-align: center; color: #64748b; }
+    .tb-res small { margin-left: auto; color: #94a3b8; font-size: 11px; }
+    .tb-res.sel, .tb-res:hover { background: #eff6ff; color: #1e40af; }
+    .tb-res-vazio { padding: 12px; font-size: 13px; color: #64748b; text-align: center; }
+    .tb-right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+    .tb-clock { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15; padding: 0 6px; font-size: 11px; color: #64748b; text-transform: capitalize; }
+    .tb-clock b { font-size: 15px; color: #0f172a; font-variant-numeric: tabular-nums; font-weight: 700; }
+    .tb-status { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: #047857; background: #ecfdf5;
+        border: 1px solid #a7f3d0; padding: 5px 10px; border-radius: 999px; }
+    .tb-status i { font-size: 7px; }
+    .tb-status.off { color: #b91c1c; background: #fef2f2; border-color: #fecaca; }
+    .tb-user { position: relative; }
+    .tb-user-btn { display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 12px 0 4px; background: #fff; border: 1px solid #dbe3ee;
+        border-radius: 999px; cursor: pointer; transition: .15s; }
+    .tb-user-btn:hover { border-color: #93c5fd; background: #f8fbff; }
+    .tb-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #1e40af, #0ea5e9); color: #fff; font-weight: 800;
+        font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tb-user-txt { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; text-align: left; }
+    .tb-user-txt b { font-size: 12.5px; color: #0f172a; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tb-user-txt small { font-size: 10.5px; color: #64748b; }
+    .tb-user-btn > i { font-size: 10px; color: #94a3b8; }
+    .tb-user-menu { display: none; position: absolute; right: 0; top: 50px; width: 260px; background: #fff; border: 1px solid #dbe3ee;
+        border-radius: 14px; box-shadow: 0 20px 45px rgba(15,23,42,.2); padding: 8px; z-index: 90; }
+    .tb-user-menu.show { display: block; }
+    .um-head { padding: 10px 10px 12px; border-bottom: 1px solid #e8edf4; margin-bottom: 6px; }
+    .um-head b { display: block; font-size: 13.5px; color: #0f172a; }
+    .um-head span { display: block; font-size: 11.5px; color: #64748b; margin-top: 2px; }
+    .um-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; background: transparent; border-radius: 8px;
+        font-size: 13px; font-weight: 500; color: #1e293b; cursor: pointer; text-align: left; }
+    .um-item i { width: 18px; text-align: center; color: #64748b; }
+    .um-item:hover { background: #eff6ff; color: #1e40af; }
+    .um-item:hover i { color: #1e40af; }
+    .um-item.danger, .um-item.danger i { color: #b91c1c; }
+    .um-item.danger:hover { background: #fef2f2; }
+    .um-sep { height: 1px; background: #e8edf4; margin: 6px 0; }
+
+    .tab-content { width: 100%; min-height: calc(100vh - 110px); }
+
+    /* ---------- Menu recolhido (somente ícones) — desktop ---------- */
+    @media (min-width: 769px) {
+        .app-layout.sb-collapsed .sidebar { width: var(--sb-w-min); min-width: var(--sb-w-min); }
+        .app-layout.sb-collapsed .sb-brand-text, .app-layout.sb-collapsed .sb-org, .app-layout.sb-collapsed .sb-label,
+        .app-layout.sb-collapsed .arrow-icon, .app-layout.sb-collapsed .submenu-container, .app-layout.sb-collapsed .sb-credits,
+        .app-layout.sb-collapsed .sgf-user-info, .app-layout.sb-collapsed .sb-txt { display: none !important; }
+        .app-layout.sb-collapsed .sb-brand { justify-content: center; padding: 0; }
+        .app-layout.sb-collapsed .menu-header-button, .app-layout.sb-collapsed .sidebar-nav > .tab-button { justify-content: center; padding: 0; }
+        .app-layout.sb-collapsed .menu-header-button > span { font-size: 0; gap: 0; }
+        .app-layout.sb-collapsed .menu-header-button > span i { font-size: 16px; }
+        .app-layout.sb-collapsed .sb-user { flex-direction: column; }
+        .app-layout.sb-collapsed .sb-logout { margin: 0; }
+    }
+    @media (max-width: 1180px) { .tb-clock { display: none; } }
+    @media (max-width: 980px)  { .tb-status { display: none; } }
+
+    /* ---------- Celular: menu vira gaveta ---------- */
+    @media (max-width: 768px) {
+        .app-layout { flex-direction: row !important; }
+        .app-layout .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 300px; min-width: 300px; height: 100vh;
+            transform: translateX(-104%); transition: transform .25s ease; border-bottom: 0; }
+        .app-layout.sb-open .sidebar { transform: none; }
+        .app-layout .sidebar-nav { flex-direction: column; overflow-x: hidden; padding: 14px 12px 8px; }
+        .app-layout .sidebar-footer { display: flex; }
+        .sb-overlay { position: fixed; inset: 0; background: rgba(2,8,23,.55); z-index: 55; }
+        .app-layout.sb-open .sb-overlay { display: block; }
+        .app-layout .main-content { padding: 0 14px 24px; }
+        .app-topbar { margin: 0 -14px 16px; padding: 0 12px; gap: 10px; }
+        .tb-search, .tb-clock, .tb-status, .tb-user-txt, .tb-crumb-mod, .tb-crumbs > i { display: none; }
+    }
+
 </style>
 </head>
 <body>
@@ -1612,29 +1784,24 @@
 </div>
 
 <div class="app-layout" style="display: none;">
-    <aside class="sidebar">
-        <div class="sidebar-header sgf-brand">
-            <div class="sgf-brand-top">
-                <img src="logo.png" class="sgf-pp" alt="Polícia Penal">
+    <div class="sb-overlay" onclick="alternarMenuLateral()"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sb-brand">
+            <img src="logo.png" class="sb-logo" alt="Polícia Penal">
+            <div class="sb-brand-text">
+                <strong>SIGADI</strong>
+                <span>Gestão Administrativa Integrada</span>
             </div>
-            <div class="sgf-title">
-                <h1>SIGADI</h1>
-                <small>Sistema Interno de Gestão Administrativa Integrada</small>
-            </div>
-            <div class="sgf-user-chip">
-                <div class="sgf-avatar" id="sgf-avatar">?</div>
-                <div class="sgf-user-info">
-                    <span id="info-nome-user">...</span>
-                    <span id="info-nivel-user" class="sgf-nivel">...</span>
-                </div>
-            </div>
-            <p class="sgf-org" id="sgf-org-nome">{{UNIDADE_NOME}}</p>
         </div>
+        <div class="sb-org" id="sgf-org-nome">{{UNIDADE_NOME}}</div>
         <div class="sidebar-nav tabs-navigation">
+            <div class="sb-label">Módulos</div>
+            <div class="sb-modules">
+
 
             <!-- CATEGORIA 1: TRÂNSITO DE VIATURAS -->
             <div class="menu-category">
-                <button type="button" class="menu-header-button" onclick="toggleSubmenu('submenu-transito')">
+                <button type="button" class="menu-header-button" title="Trânsito de Viaturas" onclick="toggleSubmenu('submenu-transito')">
                     <span><i class="fa-solid fa-route"></i> Trânsito de Viaturas</span>
                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                 </button>
@@ -1659,7 +1826,7 @@
 
             <!-- CATEGORIA 2: CADASTROS GERAIS -->
             <div class="menu-category">
-                <button type="button" class="menu-header-button" onclick="toggleSubmenu('submenu-cadastros')">
+                <button type="button" class="menu-header-button" title="Cadastros Gerais" onclick="toggleSubmenu('submenu-cadastros')">
                     <span><i class="fa-solid fa-folder-open"></i> Cadastros Gerais</span>
                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                 </button>
@@ -1681,7 +1848,7 @@
 
             <!-- CATEGORIA 3: ABASTECIMENTOS -->
             <div class="menu-category">
-                <button type="button" class="menu-header-button" onclick="toggleSubmenu('submenu-abastecimentos')">
+                <button type="button" class="menu-header-button" title="Abastecimentos" onclick="toggleSubmenu('submenu-abastecimentos')">
                     <span><i class="fa-solid fa-gas-pump"></i> Abastecimentos</span>
                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                 </button>
@@ -1700,7 +1867,7 @@
 
             <!-- CATEGORIA 4: MANUTENÇÃO DE VIATURAS -->
             <div class="menu-category">
-                <button type="button" class="menu-header-button" onclick="toggleSubmenu('submenu-manutencao')">
+                <button type="button" class="menu-header-button" title="Manutenção de Viaturas" onclick="toggleSubmenu('submenu-manutencao')">
                     <span><i class="fa-solid fa-wrench"></i> Manutenção de Viaturas</span>
                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                 </button>
@@ -1722,7 +1889,7 @@
 
             <!-- CATEGORIA 5: GESTÃO DE DOCUMENTOS -->
             <div class="menu-category">
-                <button type="button" class="menu-header-button" onclick="toggleSubmenu('submenu-documentos')">
+                <button type="button" class="menu-header-button" title="Gestão de Documentos" onclick="toggleSubmenu('submenu-documentos')">
                     <span><i class="fa-solid fa-folder-tree"></i> Gestão de Documentos</span>
                     <i class="fa-solid fa-chevron-down arrow-icon"></i>
                 </button>
@@ -1736,23 +1903,74 @@
                 </div>
             </div>
 
+        
+            </div>
+            <div class="sb-label sb-admin-label">Administração</div>
+            <button class="tab-button" id="btn-tab-usuarios" title="Gerenciar Usuários" onclick="switchTab('tab-usuarios')"><i class="fa-solid fa-users-gear"></i><span class="sb-txt">Gerenciar Usuários</span></button>
+            <button class="tab-button" id="btn-tab-logs" title="Log do Sistema" onclick="switchTab('tab-logs')"><i class="fa-solid fa-receipt"></i><span class="sb-txt">Log do Sistema</span></button>
         </div>
-        <div class="sidebar-footer header-btns">
-            <button class="btn-header" id="btn-tab-usuarios" onclick="switchTab('tab-usuarios')"><i class="fa-solid fa-users-gear"></i> Gerenciar Usuários</button>
-            <button class="btn-header" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Backup</button>
-            <button class="btn-header" onclick="document.getElementById('input-backup').click()"><i class="fa-solid fa-upload"></i> Restaurar</button>
-            <input type="file" id="input-backup" accept=".json" style="display:none" onchange="importarBackup(event)">
-            <button class="btn-header" onclick="imprimir()"><i class="fa-solid fa-print"></i> Imprimir</button>
-            <button class="btn-header danger" onclick="zerarTudo()"><i class="fa-solid fa-trash-can"></i> Apagar Tudo</button>
-            <button class="btn-header logoff-btn" onclick="sairDoSistema()"><i class="fa-solid fa-right-from-bracket"></i> Sair / Logoff</button>
-        </div>
-        <div class="sidebar-credits" style="padding: 12px 16px; text-align: center; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--text-muted); background-color: rgba(0,0,0,0.01); font-weight: 500;">
-            <div id="sgf-rev-count" style="font-weight: 700; color: var(--text-main);">SIGADI v1.0.0</div>
-            <div style="margin-top: 4px; font-weight: 600; color: var(--primary);">Desenvolvido por Maurice Batista</div>
+        <div class="sidebar-footer">
+            <div class="sb-user">
+                <div class="sgf-avatar" id="sgf-avatar">?</div>
+                <div class="sgf-user-info" style="cursor: pointer;" onclick="abrirModalAlterarSenha()" title="Clique para alterar a senha">
+                    <span id="info-nome-user">...</span>
+                    <span id="info-nivel-user" class="sgf-nivel">...</span>
+                </div>
+                <button type="button" style="background:transparent; border:none; color:var(--text-muted); padding:6px; cursor:pointer; font-size:14px;" title="Alterar Minha Senha" onclick="abrirModalAlterarSenha()"><i class="fa-solid fa-key"></i></button>
+                <button type="button" class="sb-logout logoff-btn" title="Sair / Logoff" onclick="sairDoSistema()"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+            <div class="sb-credits">
+                <div id="sgf-rev-count"><b>SIGADI v1.0.0</b></div>
+                <div>Desenvolvido por Maurice Batista</div>
+            </div>
         </div>
     </aside>
 
     <main class="main-content">
+        <div class="app-topbar">
+            <button type="button" class="tb-icon-btn" title="Recolher / expandir menu" onclick="alternarMenuLateral()"><i class="fa-solid fa-bars"></i></button>
+            <div class="tb-crumbs">
+                <span class="tb-crumb-mod" id="tb-modulo">Trânsito de Viaturas</span>
+                <i class="fa-solid fa-chevron-right"></i>
+                <strong id="tb-titulo">Registrar Saída (FCT)</strong>
+            </div>
+            <div class="tb-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="tb-busca" type="text" placeholder="Buscar funcionalidade..." autocomplete="off" oninput="buscarMenu(this.value)" onkeydown="tbBuscaKey(event)">
+                <kbd>Ctrl K</kbd>
+                <div class="tb-search-results" id="tb-busca-res"></div>
+            </div>
+            <div class="tb-right">
+                <div class="tb-clock"><span id="tb-data"></span><b id="tb-hora"></b></div>
+                <span class="tb-status" id="tb-status"><i class="fa-solid fa-circle"></i> Conectado</span>
+                <button type="button" class="tb-icon-btn" id="btn-tela-cheia" title="Tela cheia" onclick="alternarTelaCheia()"><i data-fs-icon class="fa-solid fa-expand"></i></button>
+                <div class="tb-user">
+                    <button type="button" class="tb-user-btn" onclick="toggleUserMenu(event)">
+                        <span class="tb-avatar" id="tb-avatar">?</span>
+                        <span class="tb-user-txt"><b id="tb-user-nome">...</b><small id="tb-user-nivel">...</small></span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="tb-user-menu" id="tb-user-menu">
+                        <div class="um-head"><b id="um-nome">...</b><span id="um-nivel">...</span><span id="um-org"></span></div>
+                        <button type="button" class="um-item" onclick="abrirModalAlterarSenha()"><i class="fa-solid fa-key" style="color: var(--primary);"></i> Alterar Minha Senha</button>
+                        <div class="um-sep"></div>
+                        <button type="button" class="um-item" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Backup</button>
+                        <button type="button" class="um-item" onclick="document.getElementById('input-backup').click()"><i class="fa-solid fa-upload"></i> Restaurar</button>
+                        <input type="file" id="input-backup" accept=".json" style="display:none" onchange="importarBackup(event)">
+                        <button type="button" class="um-item" onclick="imprimir()"><i class="fa-solid fa-print"></i> Imprimir</button>
+                        <button type="button" class="um-item" onclick="alternarTelaCheia()"><i data-fs-icon class="fa-solid fa-expand"></i> <span data-fs-label>Tela cheia</span></button>
+                        <div class="um-sep"></div>
+                        <button type="button" class="um-item danger" onclick="zerarTudo()"><i class="fa-solid fa-trash-can"></i> Apagar Tudo</button>
+                        <button type="button" class="um-item danger" onclick="sairDoSistema()"><i class="fa-solid fa-right-from-bracket"></i> Sair / Logoff</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-head" id="page-head">
+            <h1 id="ph-titulo">Registrar Saída (FCT)</h1>
+            <p id="ph-sub">Registre a saída da viatura e emita a Ficha de Controle de Tráfego (FCT).</p>
+        </div>
+
         
 
         <!-- Banners da Fila de Vez -->
@@ -2474,16 +2692,19 @@
             </div>
         </div>
 
-        <h3 class="form-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-            <span><i class="fa-solid fa-clipboard-list"></i> Histórico de Saídas FCT</span>
-            <div style="display: flex; gap: 10px; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #e8edf4; padding: 0 0 12px; margin: 6px 0 18px;">
+            <h3 class="form-section-title" style="border: none !important; margin: 0 !important; padding: 0 !important; flex: 1 1 auto;">
+                <i class="fa-solid fa-clipboard-list"></i> Histórico de Saídas FCT
+            </h3>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                 <input type="month" id="filtro-mes-fct" onchange="carregarViagensNaTabela(carregarDados())" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px;">
                 <select id="filtro-placa-fct" onchange="carregarViagensNaTabela(carregarDados())" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px;">
                     <option value="">Todas as Placas</option>
                 </select>
                 <input type="text" id="busca-fct" placeholder="🔍 Localizar saídas..." oninput="filtrarTabelaFCT()" style="width: 200px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px;">
             </div>
-        </h3>
+        </div>
+
         <div class="table-wrapper" style="margin-bottom: 30px; max-height: 400px; overflow-y: auto;">
             <table id="tabelaViagens">
                 <thead>
@@ -3430,6 +3651,13 @@
                                                 <label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer; user-select: none;"><input type="checkbox" class="perm-gravar" data-tab="tab-usuarios"> Gravar</label>
                                             </div>
                                         </div>
+                                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                                            <span style="font-size: 13px;">Log do Sistema</span>
+                                            <div style="display: flex; gap: 16px;">
+                                                <label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer; user-select: none;"><input type="checkbox" class="perm-acesso" data-tab="tab-logs"> Visualizar</label>
+                                                <label style="display: flex; align-items: center; gap: 4px; font-size: 12px; cursor: pointer; user-select: none;"><input type="checkbox" class="perm-gravar" data-tab="tab-logs"> Limpar</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -3457,6 +3685,106 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ABA 14: LOG DE AUDITORIA DO SISTEMA -->
+    <div id="tab-logs" class="tab-content">
+        <!-- Indicadores Rápidos de Auditoria -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px;">
+            <div style="background: var(--card-bg, #fff); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="width: 40px; height: 40px; border-radius: 8px; background: rgba(59,130,246,0.12); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div>
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600;">Total de Eventos</div>
+                    <div id="stat-logs-total" style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-top: 2px;">0</div>
+                </div>
+            </div>
+            <div style="background: var(--card-bg, #fff); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="width: 40px; height: 40px; border-radius: 8px; background: rgba(16,185,129,0.12); color: #059669; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    <i class="fa-solid fa-file-shield"></i>
+                </div>
+                <div>
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600;">FCTs Criadas/Editadas</div>
+                    <div id="stat-logs-fct" style="font-size: 20px; font-weight: 700; color: #059669; margin-top: 2px;">0</div>
+                </div>
+            </div>
+            <div style="background: var(--card-bg, #fff); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="width: 40px; height: 40px; border-radius: 8px; background: rgba(14,165,233,0.12); color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600;">Usuários Ativos</div>
+                    <div id="stat-logs-usuarios" style="font-size: 20px; font-weight: 700; color: #0284c7; margin-top: 2px;">0</div>
+                </div>
+            </div>
+            <div style="background: var(--card-bg, #fff); border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                <div style="width: 40px; height: 40px; border-radius: 8px; background: rgba(245,158,11,0.12); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 18px;">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600;">Registros Hoje</div>
+                    <div id="stat-logs-hoje" style="font-size: 20px; font-weight: 700; color: #d97706; margin-top: 2px;">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cabeçalho e Controles da Tabela de Log -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+            <h3 class="form-section-title" style="margin:0;"><i class="fa-solid fa-shield-halved"></i> Registro de Atividades e Logs de Auditoria</h3>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button type="button" class="btn-header" onclick="exportarLogsCSV()" title="Exportar logs para planilha CSV" style="margin:0; padding:8px 14px; font-size:12.5px; background:#10b981; color:#fff; border:none;">
+                    <i class="fa-solid fa-file-excel"></i> Exportar Logs (CSV)
+                </button>
+                <button type="button" class="btn-header danger" id="btnLimparLogsMaster" onclick="limparHistoricoLogsMaster()" title="Limpar histórico de registros do log (Exclusivo Master)" style="margin:0; padding:8px 14px; font-size:12.5px; background:#dc2626; color:#fff; border:none; display:none;">
+                    <i class="fa-solid fa-trash-can"></i> Limpar Logs
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtros do Log -->
+        <div style="background:var(--card-bg,var(--bg)); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-bottom:16px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <div style="flex:1; min-width:240px;">
+                <input type="text" id="filtro-log-busca" oninput="filtrarTabelaLogs()" placeholder="🔍 Buscar por usuário, ação, detalhes, FCT..." style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--border); background-color:var(--bg); color:var(--text-main); font-family:inherit; font-size:13px;">
+            </div>
+            <div style="min-width:170px;">
+                <select id="filtro-log-usuario" onchange="filtrarTabelaLogs()" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--border); background-color:var(--bg); color:var(--text-main); font-family:inherit; font-size:13px;">
+                    <option value="">Todos os Usuários</option>
+                </select>
+            </div>
+            <div style="min-width:170px;">
+                <select id="filtro-log-categoria" onchange="filtrarTabelaLogs()" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--border); background-color:var(--bg); color:var(--text-main); font-family:inherit; font-size:13px;">
+                    <option value="">Todas as Categorias</option>
+                    <option value="FCT">📄 FCTs / Saídas</option>
+                    <option value="Motorista">👤 Motoristas</option>
+                    <option value="Viatura">🚗 Viaturas</option>
+                    <option value="Abastecimento">⛽ Abastecimentos</option>
+                    <option value="Manutenção">🔧 Manutenção / Óleo</option>
+                    <option value="Temporalidade">📂 Temporalidade</option>
+                    <option value="Romaneio">✉️ Romaneios</option>
+                    <option value="Usuário">🔐 Usuários / Sistema</option>
+                </select>
+            </div>
+            <button type="button" onclick="limparFiltrosLogs()" style="background:transparent; border:1px solid var(--border); padding:7px 12px; border-radius:6px; font-size:12px; cursor:pointer; color:var(--text-muted);" title="Limpar filtros de auditoria">
+                <i class="fa-solid fa-rotate-left"></i> Limpar
+            </button>
+        </div>
+
+        <!-- Tabela de Logs com Rolagem Interna -->
+        <div class="table-wrapper" style="max-height: 560px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px;">
+            <table id="tabelaLogsSistema" style="width:100%; border-collapse: separate; border-spacing: 0;">
+                <thead style="position: sticky; top: 0; z-index: 10; background: var(--card-bg, var(--bg));">
+                    <tr>
+                        <th style="width:140px; text-align:center; white-space:nowrap; padding: 10px 8px;">Data / Hora</th>
+                        <th style="width:140px; text-align:left; padding: 10px 8px;">Usuário / Responsável</th>
+                        <th style="width:120px; text-align:center; white-space:nowrap; padding: 10px 8px;">Categoria</th>
+                        <th style="width:160px; text-align:left; padding: 10px 8px;">Ação</th>
+                        <th style="text-align:left; padding: 10px 8px;">Detalhes do Registro</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 
@@ -3502,7 +3830,39 @@
     </div>
 </div>
 
+<!-- Modal Alterar Senha do Usuário Logado -->
+<div id="modal-alterar-senha" class="modal-overlay" style="display: none;">
+    <div class="modal-box" style="max-width: 440px; width: 90%; border-radius: 12px; padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 18px;">
+            <h3 style="margin: 0; font-size: 18px; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-key" style="color: var(--primary);"></i> Alterar Minha Senha
+            </h3>
+            <button type="button" onclick="fecharModalAlterarSenha()" style="background: transparent; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;">&times;</button>
+        </div>
+        
+        <form onsubmit="salvarNovaSenhaUsuario(event)">
+            <div style="margin-bottom: 14px; text-align: left;">
+                <label style="display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Senha Atual</label>
+                <input type="password" id="senhaAtualUser" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-size: 14px;" placeholder="Sua senha atual">
+            </div>
 
+            <div style="margin-bottom: 14px; text-align: left;">
+                <label style="display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Nova Senha</label>
+                <input type="password" id="novaSenhaUser" required minlength="4" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-size: 14px;" placeholder="Mínimo 4 caracteres">
+            </div>
+
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text-main);">Confirmar Nova Senha</label>
+                <input type="password" id="confirmarNovaSenhaUser" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-size: 14px;" placeholder="Repita a nova senha">
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" class="btn-cancelar" onclick="fecharModalAlterarSenha()" style="padding: 9px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-weight: 600; cursor: pointer;">Cancelar</button>
+                <button type="submit" class="btn-submit" style="padding: 9px 18px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check"></i> Salvar Nova Senha</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <!-- Modal Edição Abastecimento -->
 <div class="modal-overlay" id="modal-editar-abastecimento">
@@ -4386,7 +4746,9 @@
             pos_sp: 0,
             pos_interior: 0,
             mapaForca: [],
-            documentosTemporalidade: []
+            documentosTemporalidade: [],
+            logsSistema: [],
+            caixasEmEdicao: {}
         };
     }
 
@@ -4410,6 +4772,7 @@
         if (!parsed.mapaForca) parsed.mapaForca = [];
         if (!parsed.romaneios) parsed.romaneios = [];
         if (!parsed.documentosTemporalidade) parsed.documentosTemporalidade = [];
+        if (!parsed.logsSistema) parsed.logsSistema = [];
         parsed.mapaForca.forEach(item => {
             if (item.acompanhante === undefined) item.acompanhante = '';
         });
@@ -4922,9 +5285,201 @@
     });
 
     // --- FLUXO DE ABAS ---
+
+
+    // ═════ SIGADI — comportamento da estrutura (menu, barra superior, tela cheia) ═════
+    function _fsAtivo() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+    function entrarTelaCheia() {
+        if (_fsAtivo()) return;
+        const el = document.documentElement;
+        const f = el.requestFullscreen || el.webkitRequestFullscreen;
+        if (!f) return;
+        try { const r = f.call(el); if (r && r.catch) r.catch(function () {}); } catch (e) {}
+    }
+    function alternarTelaCheia() {
+        if (_fsAtivo()) {
+            const f = document.exitFullscreen || document.webkitExitFullscreen;
+            if (f) { try { f.call(document); } catch (e) {} }
+        } else {
+            entrarTelaCheia();
+        }
+    }
+    function atualizarIconesTelaCheia() {
+        const on = _fsAtivo();
+        document.querySelectorAll('[data-fs-icon]').forEach(function (i) { i.className = on ? 'fa-solid fa-compress' : 'fa-solid fa-expand'; });
+        document.querySelectorAll('[data-fs-label]').forEach(function (l) { l.textContent = on ? 'Sair da tela cheia' : 'Tela cheia'; });
+    }
+    document.addEventListener('fullscreenchange', atualizarIconesTelaCheia);
+    document.addEventListener('webkitfullscreenchange', atualizarIconesTelaCheia);
+
+    function alternarMenuLateral() {
+        const l = document.querySelector('.app-layout');
+        if (!l) return;
+        if (window.innerWidth <= 768) { l.classList.toggle('sb-open'); return; }
+        const c = l.classList.toggle('sb-collapsed');
+        try { localStorage.setItem('sigadi_menu_recolhido', c ? '1' : '0'); } catch (e) {}
+    }
+    function toggleUserMenu(ev) {
+        if (ev) ev.stopPropagation();
+        const m = document.getElementById('tb-user-menu');
+        if (m) m.classList.toggle('show');
+    }
+
+    function _textoLimpo(el) { return (el.textContent || '').replace(/\s+/g, ' ').trim(); }
+    function atualizarShellApp(tabId) {
+        const btn = Array.from(document.querySelectorAll('.app-layout .tab-button')).find(function (b) {
+            const oc = b.getAttribute('onclick'); return oc && oc.indexOf("'" + tabId + "'") !== -1;
+        });
+        const t = document.getElementById('tb-titulo'), m = document.getElementById('tb-modulo');
+        if (btn && t && m) {
+            t.textContent = _textoLimpo(btn);
+            const cat = btn.closest('.menu-category');
+            m.textContent = cat ? _textoLimpo(cat.querySelector('.menu-header-button')) : 'Administração';
+        }
+        const ph = document.getElementById('ph-titulo'), ps = document.getElementById('ph-sub');
+        if (ph && t) ph.textContent = t.textContent;
+        if (ps) ps.textContent = DESCRICOES_TELAS[tabId] || '';
+        const l = document.querySelector('.app-layout');
+        if (l) l.classList.remove('sb-open');
+    }
+    const DESCRICOES_TELAS = {
+        'tab-saida': 'Registre a saída da viatura e emita a Ficha de Controle de Tráfego (FCT).',
+        'tab-vez': 'Controle a fila de vez dos motoristas para viagens a São Paulo e ao interior.',
+        'tab-historico': 'Consulte as saídas FCT registradas, com filtros por mês, placa e busca.',
+        'tab-relatorios': 'Acompanhe o desempenho da frota e dos motoristas.',
+        'tab-mapa-forca': 'Gerencie e emita o Mapa Força.',
+        'tab-motoristas': 'Cadastre e gerencie os motoristas habilitados.',
+        'tab-viaturas': 'Cadastre e gerencie a frota de viaturas.',
+        'tab-servicos': 'Gerencie os tipos de serviço utilizados nas saídas.',
+        'tab-servidores': 'Cadastre e consulte os servidores.',
+        'tab-abastecimentos': 'Registre e acompanhe os abastecimentos da frota.',
+        'tab-relatorio-abastecimentos': 'Visualize o consumo de combustível em gráficos.',
+        'tab-prospeccao': 'Projete e acompanhe os gastos com abastecimento.',
+        'tab-troca-oleo': 'Controle as trocas de óleo e os próximos vencimentos.',
+        'tab-manutencao': 'Registre e acompanhe as manutenções das viaturas.',
+        'tab-check-viatura': 'Registre o check das viaturas e acompanhe as pendências.',
+        'tab-pagamentos': 'Controle os pagamentos relacionados à manutenção.',
+        'tab-romaneios': 'Elabore e controle o envio de romaneios.',
+        'tab-temporalidade': 'Controle caixas e documentos conforme a Tabela de Temporalidade.',
+        'tab-usuarios': 'Gerencie usuários, níveis de acesso e permissões.',
+        'tab-logs': 'Consulte o registro de atividades realizadas no sistema.'
+    };
+    function atualizarUsuarioShell() {
+        if (typeof usuarioLogado === 'undefined' || !usuarioLogado) return;
+        const nome = usuarioLogado.nome || usuarioLogado.login || '';
+        const nivel = usuarioLogado.nivel || 'Operador';
+        const ini = nome.trim().split(/\s+/).map(function (p) { return p[0]; }).slice(0, 2).join('').toUpperCase();
+        const set = function (id, v) { const e = document.getElementById(id); if (e) e.textContent = v; };
+        set('tb-avatar', ini || '?'); set('tb-user-nome', nome); set('tb-user-nivel', nivel);
+        set('um-nome', nome); set('um-nivel', nivel);
+        const org = document.getElementById('sgf-org-nome');
+        set('um-org', org ? org.textContent.trim() : '');
+    }
+    function atualizarRelogioShell() {
+        const dt = document.getElementById('tb-data'), hr = document.getElementById('tb-hora');
+        if (!dt || !hr) return;
+        const d = new Date();
+        { const t = d.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).replace(/\./g, '').replace(/ de /g, ' '); dt.textContent = t.charAt(0).toUpperCase() + t.slice(1); }
+        hr.textContent = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+    function atualizarStatusRede() {
+        const s = document.getElementById('tb-status');
+        if (!s) return;
+        const on = navigator.onLine;
+        s.classList.toggle('off', !on);
+        s.innerHTML = '<i class="fa-solid fa-circle"></i> ' + (on ? 'Conectado' : 'Sem conexão');
+    }
+
+    // Busca de funcionalidades do menu (Ctrl+K)
+    let _buscaSel = -1, _buscaItens = [];
+    function _norm(s) { return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
+    function buscarMenu(q) {
+        const box = document.getElementById('tb-busca-res');
+        if (!box) return;
+        q = _norm((q || '').trim());
+        box.textContent = '';
+        _buscaSel = -1;
+        if (!q) { box.classList.remove('show'); _buscaItens = []; return; }
+        _buscaItens = Array.from(document.querySelectorAll('.app-layout .tab-button')).filter(function (b) {
+            return b.style.display !== 'none' && /switchTab\('/.test(b.getAttribute('onclick') || '');
+        }).map(function (b) {
+            const cat = b.closest('.menu-category');
+            return {
+                id: (b.getAttribute('onclick').match(/switchTab\('([^']+)'\)/) || [])[1],
+                label: _textoLimpo(b),
+                mod: cat ? _textoLimpo(cat.querySelector('.menu-header-button')) : 'Administração',
+                icon: (b.querySelector('i') || {}).className || 'fa-solid fa-file'
+            };
+        }).filter(function (it) { return _norm(it.label + ' ' + it.mod).indexOf(q) !== -1; }).slice(0, 8);
+        if (!_buscaItens.length) {
+            const v = document.createElement('div'); v.className = 'tb-res-vazio'; v.textContent = 'Nenhuma funcionalidade encontrada';
+            box.appendChild(v);
+        } else {
+            _buscaItens.forEach(function (it, idx) {
+                const r = document.createElement('div'); r.className = 'tb-res';
+                const i = document.createElement('i'); i.className = it.icon;
+                const t = document.createElement('span'); t.textContent = it.label;
+                const m = document.createElement('small'); m.textContent = it.mod;
+                r.appendChild(i); r.appendChild(t); r.appendChild(m);
+                r.addEventListener('mousedown', function (e) { e.preventDefault(); irParaResultadoBusca(idx); });
+                box.appendChild(r);
+            });
+        }
+        box.classList.add('show');
+    }
+    function irParaResultadoBusca(idx) {
+        const it = _buscaItens[idx];
+        if (!it) return;
+        const inp = document.getElementById('tb-busca');
+        if (inp) { inp.value = ''; inp.blur(); }
+        buscarMenu('');
+        switchTab(it.id);
+    }
+    function tbBuscaKey(e) {
+        const box = document.getElementById('tb-busca-res');
+        const rows = box ? box.querySelectorAll('.tb-res') : [];
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            if (!rows.length) return;
+            e.preventDefault();
+            _buscaSel = (_buscaSel + (e.key === 'ArrowDown' ? 1 : -1) + rows.length) % rows.length;
+            rows.forEach(function (r, i) { r.classList.toggle('sel', i === _buscaSel); });
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (rows.length) irParaResultadoBusca(_buscaSel >= 0 ? _buscaSel : 0);
+        } else if (e.key === 'Escape') {
+            e.target.value = ''; buscarMenu(''); e.target.blur();
+        }
+    }
+    document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+            const l = document.querySelector('.app-layout'), i = document.getElementById('tb-busca');
+            if (l && i && l.style.display !== 'none') { e.preventDefault(); i.focus(); i.select(); }
+        }
+    });
+    document.addEventListener('click', function (e) {
+        const m = document.getElementById('tb-user-menu');
+        if (m && !e.target.closest('.tb-user')) m.classList.remove('show');
+        const r = document.getElementById('tb-busca-res');
+        if (r && !e.target.closest('.tb-search')) r.classList.remove('show');
+    });
+    (function () {
+        function ini() {
+            try { if (localStorage.getItem('sigadi_menu_recolhido') === '1' && window.innerWidth > 768) document.querySelector('.app-layout').classList.add('sb-collapsed'); } catch (e) {}
+            atualizarRelogioShell(); setInterval(atualizarRelogioShell, 20000);
+            atualizarStatusRede();
+            window.addEventListener('online', atualizarStatusRede);
+            window.addEventListener('offline', atualizarStatusRede);
+            const m = document.getElementById('tb-user-menu');
+            if (m) m.addEventListener('click', function () { m.classList.remove('show'); });
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ini); else ini();
+    })();
+
     function toggleSubmenu(id) {
         const submenu = document.getElementById(id);
         if (!submenu) return;
+        const _lay = document.querySelector('.app-layout.sb-collapsed');
+        if (_lay && window.innerWidth > 768) { _lay.classList.remove('sb-collapsed'); try { localStorage.setItem('sigadi_menu_recolhido', '0'); } catch (e) {} }
         const button = submenu.previousElementSibling;
         const arrow = button.querySelector('.arrow-icon');
         
@@ -4959,6 +5514,7 @@
         document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
 
         document.getElementById(tabId).classList.add('active');
+        try { atualizarShellApp(tabId); } catch (e) {}
         const targetBtn = Array.from(document.querySelectorAll('.tab-button')).find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabId));
         if (targetBtn) {
             targetBtn.classList.add('active');
@@ -5050,6 +5606,8 @@
             carregarTabelaTemporalidade(dados); try { inicializarDropdownCatalogoSAP(); } catch(e) {}
         } else if (tabId === 'tab-romaneios') {
             carregarHistoricoRomaneios(dados);
+        } else if (tabId === 'tab-logs') {
+            carregarTabelaLogs(dados);
         }
 
     }
@@ -5341,6 +5899,7 @@
             };
 
             dadosAtuais.viagensFCT.push(novaViagem);
+            registrarLog('FCT / Trânsito', `Criação de FCT Nº ${novaViagem.fct}`, `FCT registrada para motorista ${novaViagem.motorista} na viatura ${novaViagem.placa} (${novaViagem.destino}) - Status: ${novaViagem.status}`, dadosAtuais);
             salvarDados(dadosAtuais);
 
             // Obter valor do checkbox ANTES de resetar o formulário
@@ -5511,6 +6070,7 @@
         const diffMins = Math.floor((diffMs % 3600000) / 60000);
         v.tempoUso = `${diffHrs}h ${diffMins}m`;
 
+        registrarLog('FCT / Trânsito', `Encerramento de FCT Nº ${v.fct}`, `FCT encerrada para viatura ${v.placa}. KM Rodado: ${v.kmRodado} KM`, dados);
         salvarDados(dados);
         fecharModalEncerrarFCT();
 
@@ -5810,7 +6370,7 @@
                 <td>${v.horaSaida}</td>
                 <td>${displayHoraChegada}</td>
                 <td style="font-weight: bold; color: var(--success);">${displayTempoUso}</td>
-                <td style="text-align: center; display: flex; gap: 4px; justify-content: center;">
+                <td style="text-align: center; white-space: nowrap;">
                     ${btnEncerrar}
                     <button class="btn-icon" onclick="imprimirFCT(${v.id})" title="Imprimir FCT" style="color: var(--accent);"><i class="fa-solid fa-print"></i></button>
                     <button class="btn-icon" onclick="imprimirOrdemSaida(${v.id})" title="Ordem de Saída de Viatura" style="color: var(--secondary);"><i class="fa-solid fa-right-from-bracket"></i></button>
@@ -5827,7 +6387,9 @@
     function deletarViagemFCT(id) {
         openConfirmModal('Tem certeza que deseja deletar este registro de FCT?', () => {
             const dados = carregarDados();
+            const vDel = dados.viagensFCT.find(v => v.id === id);
             dados.viagensFCT = dados.viagensFCT.filter(v => v.id !== id);
+            registrarLog('FCT / Trânsito', `Exclusão de FCT Nº ${vDel ? vDel.fct : id}`, `Registro de FCT Nº ${vDel ? vDel.fct : id} (${vDel ? vDel.placa : ''}) foi excluído`, dados);
             salvarDados(dados);
             carregarViagensNaTabela(dados);
             showToast('Registro de FCT removido!', 'success');
@@ -5978,6 +6540,7 @@
         dados.viagensFCT[idx].observacoes = obs;
         dados.viagensFCT[idx].status = novoStatus;
 
+        registrarLog('FCT / Trânsito', `Edição de FCT Nº ${num}`, `FCT Nº ${num} editada para viatura ${placa} (Motorista: ${motorista}, Status: ${novoStatus})`, dados);
         salvarDados(dados);
         fecharModalEditarViagemFCT();
         carregarViagensNaTabela(dados);
@@ -6028,14 +6591,30 @@
         if (!dados.pulos || dados.pulos.length === 0) {
             pl.innerHTML = '<div class="empty">Nenhum pulo registrado.</div>';
         } else {
-            pl.innerHTML = [...dados.pulos].reverse().map(p => {
+            pl.innerHTML = [...dados.pulos].reverse().map((p, revIndex) => {
+                const realIdx = dados.pulos.length - 1 - revIndex;
                 let txtFila = p.tipo === 'sp' ? 'São Paulo' : 'Viagem Interior';
-                return `<div class="pulo-item">
-                    ⏭ <span>${p.motorista}</span> pulou a vez em <strong>${txtFila}</strong>
-                    &nbsp;—&nbsp; ${p.data_hora} &nbsp;|&nbsp; Motivo: ${p.motivo}
+                return `<div class="pulo-item" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <div>
+                        ⏭ <span>${p.motorista}</span> pulou a vez em <strong>${txtFila}</strong>
+                        &nbsp;—&nbsp; ${p.data_hora} &nbsp;|&nbsp; Motivo: ${p.motivo}
+                    </div>
+                    <button class="btn-icon-danger" onclick="deletarPuloVez(${realIdx})" title="Apagar pulo" style="padding: 4px 8px; flex-shrink: 0;"><i class="fa-solid fa-trash"></i></button>
                 </div>`;
             }).join('');
         }
+    }
+
+    function deletarPuloVez(index) {
+        openConfirmModal('Excluir este registro de pulo de vez?', () => {
+            const dados = carregarDados();
+            if (dados.pulos && dados.pulos[index]) {
+                dados.pulos.splice(index, 1);
+                salvarDados(dados);
+                showToast('Pulo de vez removido com sucesso!', 'success');
+                atualizarVisualGeral(dados);
+            }
+        });
     }
 
     function deletarViagemVez(index) {
@@ -6496,7 +7075,18 @@
             if (v.tipo === 'interior' && contInterior[v.motorista] !== undefined) contInterior[v.motorista]++;
         });
 
-        function buildSecao(titulo, cont, className) {
+        // Mapear pulos por motorista e por tipo
+        const pulosPorMotorista = {};
+        if (dados.pulos && Array.isArray(dados.pulos)) {
+            dados.pulos.forEach(p => {
+                if (!pulosPorMotorista[p.motorista]) {
+                    pulosPorMotorista[p.motorista] = [];
+                }
+                pulosPorMotorista[p.motorista].push(p);
+            });
+        }
+
+        function buildSecao(titulo, cont, className, tipoFila) {
             const total = Object.values(cont).reduce((a, b) => a + b, 0);
             const ord = Object.entries(cont).sort((a, b) => b[1] - a[1]);
 
@@ -6505,14 +7095,27 @@
                     <div class="rel-titulo">${titulo} — Total de Viagens de Vez: ${total}</div>
                     ${ord.map(([nome, qtd]) => {
                         const pct = total > 0 ? (qtd / total * 100) : 0;
+                        const listaPulos = (pulosPorMotorista[nome] || []).filter(p => p.tipo === tipoFila);
+                        let htmlPulos = '';
+                        if (listaPulos.length > 0) {
+                            htmlPulos = `<div style="margin-top: 6px; padding: 6px 10px; background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444; border-radius: 4px; font-size: 12px; color: #b91c1c;">
+                                <strong><i class="fa-solid fa-forward"></i> Pulos de Vez (${listaPulos.length}):</strong>
+                                <ul style="margin: 4px 0 0 16px; padding: 0;">
+                                    ${listaPulos.map(p => `<li><strong>Data/Hora:</strong> ${p.data_hora} &nbsp;|&nbsp; <strong>Motivo:</strong> ${p.motivo}</li>`).join('')}
+                                </ul>
+                            </div>`;
+                        }
                         return `
-                            <div class="rel-item">
-                                <div class="rel-nome">${nome}</div>
-                                <div class="rel-qtd">${qtd} vez(es)</div>
-                                <div class="barra-bg">
-                                    <div class="barra-fill ${className}" style="width: ${pct}%"></div>
+                            <div class="rel-item" style="flex-wrap: wrap;">
+                                <div style="display: flex; align-items: center; width: 100%; gap: 10px;">
+                                    <div class="rel-nome">${nome}</div>
+                                    <div class="rel-qtd">${qtd} vez(es)</div>
+                                    <div class="barra-bg">
+                                        <div class="barra-fill ${className}" style="width: ${pct}%"></div>
+                                    </div>
+                                    <div class="rel-pct">${pct.toFixed(1)}%</div>
                                 </div>
-                                <div class="rel-pct">${pct.toFixed(1)}%</div>
+                                ${htmlPulos}
                             </div>
                         `;
                     }).join('')}
@@ -6520,9 +7123,9 @@
             `;
         }
 
-        div.innerHTML = buildSecao('🏙️ Fila de Viagens: São Paulo', contSP, 'sp') +
+        div.innerHTML = buildSecao('🏙️ Fila de Viagens: São Paulo', contSP, 'sp', 'sp') +
                         '<div style="margin: 24px 0; border-top: 1px solid var(--border)"></div>' +
-                        buildSecao('🌳 Fila de Viagens: Viagem Interior', contInterior, 'interior');
+                        buildSecao('🌳 Fila de Viagens: Viagem Interior', contInterior, 'interior', 'interior');
     }
 
     // --- ATUALIZAÇÕES VISUAIS GERAIS ---
@@ -21387,18 +21990,45 @@
             anoBase = new Date(doc.criadoEm || Date.now()).getFullYear();
         }
 
-        // Extrair prazo em anos de prazoGuarda
-        let prazoAnos = 5; // Padrão
-        const prazoStr = (doc.prazoGuarda || '').toLowerCase();
-        const matchAnos = prazoStr.match(/(\d+)\s*(?:ano|a\b)/);
-        if (matchAnos) {
-            prazoAnos = parseInt(matchAnos[1], 10);
-        } else {
-            const matchNum = prazoStr.match(/\d+/);
-            if (matchNum) {
-                prazoAnos = parseInt(matchNum[0], 10);
-            } else if (prazoStr.includes('vigência') || prazoStr.includes('vigencia')) {
-                prazoAnos = 5;
+        // Extrair e somar todos os prazos em anos (fase produtora + fase intermediária/arquivo)
+        let prazoAnos = 5; // Padrão caso não haja números
+        const prazoStr = (doc.prazoGuarda || '').trim();
+        if (prazoStr) {
+            // Dividir por separadores de fase: '/', '+', 'mais', 'e', ';'
+            const partes = prazoStr.split(/[\/\+\;]|\bmais\b|\be\b/i);
+            let somaTotalAnos = 0;
+            let encontrouNumeroValido = false;
+
+            partes.forEach(parte => {
+                // Em cada parte (ex: "1 ano (Unidade Produtora)", "5 anos (Arquivo)"), pega o 1º número de anos (<= 100)
+                const matchNums = [...parte.matchAll(/\b(\d+)\b/g)];
+                for (const m of matchNums) {
+                    const val = parseInt(m[1], 10);
+                    if (!isNaN(val) && val > 0 && val <= 100) {
+                        somaTotalAnos += val;
+                        encontrouNumeroValido = true;
+                        break; // Pega apenas o primeiro número de duração de cada fase
+                    }
+                }
+            });
+
+            if (encontrouNumeroValido && somaTotalAnos > 0) {
+                prazoAnos = somaTotalAnos;
+            } else {
+                // Fallback: busca todos os números <= 100 na string inteira e soma
+                const matchFallback = [...prazoStr.matchAll(/\b(\d+)\b/g)];
+                let somaFb = 0;
+                let cntFb = 0;
+                for (const m of matchFallback) {
+                    const val = parseInt(m[1], 10);
+                    if (!isNaN(val) && val > 0 && val <= 100) {
+                        somaFb += val;
+                        cntFb++;
+                    }
+                }
+                if (cntFb > 0 && somaFb > 0) {
+                    prazoAnos = somaFb;
+                }
             }
         }
 
@@ -23329,6 +23959,7 @@
             obs
         });
 
+        registrarLog('Manutenção / Óleo', `Troca de Óleo: ${placa}`, `Troca de óleo registrada na KM ${kmUltima} para a viatura ${placa}`, dados);
         salvarDados(dados);
         showToast('Troca de Óleo registrada com sucesso!', 'success');
         document.getElementById('formOleo').reset();
@@ -23341,7 +23972,9 @@
     function excluirTrocaOleo(id) {
         openConfirmModal('Tem certeza que deseja excluir este registro de Troca de Óleo?', () => {
             const dados = carregarDados();
+            const oleoDel = dados.trocasOleo.find(t => t.id === id);
             dados.trocasOleo = dados.trocasOleo.filter(t => t.id !== id);
+            registrarLog('Manutenção / Óleo', `Exclusão de Troca de Óleo`, `Registro de troca de óleo (${oleoDel ? oleoDel.placa : id}) excluído`, dados);
             salvarDados(dados);
             showToast('Registro excluído.', 'success');
             carregarTabelaOleo(dados);
@@ -23406,7 +24039,7 @@ function carregarTabelaOleo(dados) {
                 <td><strong>${t.placa}</strong></td>
                 <td>${t.kmUltima} KM</td>
                 <td>${proxTroca} KM</td>
-                <td style="display: flex; gap: 8px; align-items: center;">
+                <td style="white-space: nowrap;">
                     <input type="number" id="oleo-km-manual-${t.id}" value="${kmAtual}" style="width: 90px; padding: 4px; border: 1px solid var(--border); background: rgba(0,0,0,0.2); color: var(--text-main); border-radius: 4px;" title="Edite e clique no botão para salvar">
                     <button class="btn-icon" style="color: var(--success); cursor: pointer; background: none; border: none;" onclick="salvarKmManualOleo(${t.id})" title="Salvar Nova KM"><i class="fa-solid fa-check-circle" style="font-size: 16px;"></i></button>
                 </td>
@@ -23493,6 +24126,7 @@ function carregarTabelaOleo(dados) {
             valorTotal: parseFloat(document.getElementById('absPreco').value) * parseFloat(document.getElementById('absLitros').value)
         };
         dados.abastecimentos.push(novo);
+        registrarLog('Combustível / Abastecimento', `Novo Abastecimento (${novo.combustivel})`, `Abastecimento de ${novo.litros}L (R$ ${novo.valorTotal.toFixed(2)}) na viatura ${novo.placa} (FCT: ${novo.fct})`, dados);
         salvarDados(dados);
         document.getElementById('formAbastecimento').reset();
         document.getElementById('absTotal').value = "";
@@ -23503,7 +24137,9 @@ function carregarTabelaOleo(dados) {
     function excluirAbastecimento(id) {
         openConfirmModal('Deseja excluir este registro de abastecimento?', () => {
             const dados = carregarDados();
+            const absDel = dados.abastecimentos.find(a => a.id === id);
             dados.abastecimentos = dados.abastecimentos.filter(a => a.id !== id);
+            registrarLog('Combustível / Abastecimento', `Exclusão de Abastecimento`, `Abastecimento da viatura ${absDel ? absDel.placa : ''} (FCT: ${absDel ? absDel.fct : id}) foi excluído`, dados);
             salvarDados(dados);
             showToast('Abastecimento excluído!', 'success');
             carregarTabelaAbastecimentos(dados);
@@ -23576,6 +24212,7 @@ function carregarTabelaOleo(dados) {
             a.litros = litros;
             a.nf = nf;
             a.valorTotal = total;
+            registrarLog('Combustível / Abastecimento', `Edição de Abastecimento`, `Abastecimento atualizado para viatura ${placa} (FCT: ${fct}, Litros: ${litros})`, dados);
             salvarDados(dados);
             showToast('Abastecimento atualizado!', 'success');
             carregarTabelaAbastecimentos(dados);
@@ -24748,6 +25385,8 @@ function carregarTabelaOleo(dados) {
             showToast('Manutenção salva com sucesso!', 'success');
         }
 
+        const acaoManut = manutencaoEditandoId ? 'Edição de Manutenção' : 'Nova Manutenção';
+        registrarLog('Manutenção / Oficinas', `${acaoManut}: ${titulo}`, `Manutenção na viatura ${viatura} (Oficina: ${oficina}, Valor: R$ ${valor})`, dados);
         salvarDados(dados);
         carregarTabelaManutencao(dados);
         carregarTabelaPagamentos(dados);
@@ -24794,7 +25433,9 @@ function carregarTabelaOleo(dados) {
     window.deletarManutencao = function(id) {
         openConfirmModal('Tem certeza que deseja excluir este registro de manutenção? Esta ação não pode ser desfeita.', () => {
             const dados = carregarDados();
+            const manDel = dados.manutencoes.find(m => m.id === id);
             dados.manutencoes = dados.manutencoes.filter(m => m.id !== id);
+            registrarLog('Manutenção / Oficinas', `Exclusão de Manutenção`, `Manutenção ${manDel ? manDel.titulo : id} (Viatura: ${manDel ? manDel.viatura : ''}) excluída`, dados);
             salvarDados(dados);
             carregarTabelaManutencao(dados);
             carregarTabelaPagamentos(dados);
@@ -24880,6 +25521,7 @@ function carregarTabelaOleo(dados) {
         if (!m) return;
         
         m.pago = !m.pago;
+        registrarLog('Manutenção / Pagamentos', `Alteração de Pagamento`, `Pagamento da manutenção "${m.titulo}" (${m.viatura}) alterado para ${m.pago ? 'PAGO' : 'PENDENTE'}`, dados);
         salvarDados(dados);
         
         carregarTabelaPagamentos(dados);
@@ -24928,6 +25570,7 @@ function carregarTabelaOleo(dados) {
         if (!dados.checksViatura) dados.checksViatura = [];
         dados.checksViatura.push(novoCheck);
         console.log("SIGADI Check: Registro inserido na lista local. Total de checks:", dados.checksViatura.length);
+        registrarLog('Check Viatura', `Novo Check: ${novoCheck.viatura}`, `Check registrado para ${novoCheck.viatura} - Prioridade: ${novoCheck.prioridade}, Problema: ${novoCheck.problema}`, dados);
         salvarDados(dados);
 
         // Resetar form
@@ -25138,6 +25781,7 @@ function carregarTabelaOleo(dados) {
         dados.checksViatura[idx].manutencao = manutencaoVal;
         dados.checksViatura[idx].servidor = servidorVal;
 
+        registrarLog('Check Viatura', `Edição de Check`, `Check de viatura editado (${viaturaVal} - Prioridade: ${prioridadeVal})`, dados);
         salvarDados(dados);
         fecharModalEditarCheck();
         carregarChecksNaTabela(dados);
@@ -25147,7 +25791,9 @@ function carregarTabelaOleo(dados) {
     function excluirCheck(id) {
         openConfirmModal('Tem certeza que deseja excluir este check de viatura?', () => {
             const dados = carregarDados();
+            const chkDel = dados.checksViatura.find(c => c.id === id);
             dados.checksViatura = dados.checksViatura.filter(check => check.id !== id);
+            registrarLog('Check Viatura', `Exclusão de Check`, `Check de viatura (${chkDel ? chkDel.viatura : id}) removido`, dados);
             salvarDados(dados);
             carregarChecksNaTabela(dados);
             showToast('Check de viatura removido!', 'success');
@@ -25402,6 +26048,9 @@ function carregarTabelaOleo(dados) {
                 .trim().split(/\s+/).map(p => p[0]).slice(0, 2).join('').toUpperCase();
         }
 
+        try { atualizarUsuarioShell(); const _a = document.querySelector('.tab-content.active'); if (_a) atualizarShellApp(_a.id); } catch (e) {}
+        try { entrarTelaCheia(); } catch (e) {}
+
         // Limpar login form
         document.getElementById('loginUser').value = '';
         document.getElementById('loginPass').value = '';
@@ -25463,6 +26112,81 @@ function carregarTabelaOleo(dados) {
         switchTab('tab-saida'); // reseta aba
     }
 
+    // --- ALTERAR SENHA DO USUÁRIO LOGADO ---
+    function abrirModalAlterarSenha() {
+        if (!usuarioLogado) {
+            showToast('Nenhum usuário logado no momento.', 'error');
+            return;
+        }
+        document.getElementById('senhaAtualUser').value = '';
+        document.getElementById('novaSenhaUser').value = '';
+        document.getElementById('confirmarNovaSenhaUser').value = '';
+        document.getElementById('modal-alterar-senha').style.display = 'flex';
+        setTimeout(() => {
+            const input = document.getElementById('senhaAtualUser');
+            if (input) input.focus();
+        }, 100);
+    }
+
+    function fecharModalAlterarSenha() {
+        document.getElementById('modal-alterar-senha').style.display = 'none';
+        document.getElementById('senhaAtualUser').value = '';
+        document.getElementById('novaSenhaUser').value = '';
+        document.getElementById('confirmarNovaSenhaUser').value = '';
+    }
+
+    function salvarNovaSenhaUsuario(event) {
+        if (event) event.preventDefault();
+        if (!usuarioLogado) {
+            showToast('Nenhum usuário logado no momento.', 'error');
+            return;
+        }
+
+        const senhaAtual = document.getElementById('senhaAtualUser').value;
+        const novaSenha = document.getElementById('novaSenhaUser').value;
+        const confirmarSenha = document.getElementById('confirmarNovaSenhaUser').value;
+
+        if (!senhaAtual || !novaSenha || !confirmarSenha) {
+            showToast('Preencha todos os campos!', 'error');
+            return;
+        }
+
+        // Validar senha atual do usuário
+        if (senhaHash(senhaAtual) !== usuarioLogado.senha) {
+            showToast('A senha atual informada está incorreta!', 'error');
+            return;
+        }
+
+        if (novaSenha !== confirmarSenha) {
+            showToast('A nova senha e a confirmação não coincidem!', 'error');
+            return;
+        }
+
+        if (novaSenha.length < 4) {
+            showToast('A nova senha deve ter no mínimo 4 caracteres!', 'error');
+            return;
+        }
+
+        const dados = carregarDados();
+        if (!dados.usuarios) dados.usuarios = [];
+
+        // Atualizar no banco de dados local
+        const userIndex = dados.usuarios.findIndex(u => u && typeof u.login === 'string' && u.login.toLowerCase() === (usuarioLogado.login || '').toLowerCase());
+
+        if (userIndex === -1) {
+            showToast('Erro: Usuário não localizado no cadastro.', 'error');
+            return;
+        }
+
+        const novaHash = senhaHash(novaSenha);
+        dados.usuarios[userIndex].senha = novaHash;
+        usuarioLogado.senha = novaHash;
+
+        salvarDados(dados);
+        fecharModalAlterarSenha();
+        showToast('Sua senha foi alterada com sucesso!', 'success');
+    }
+
     function aplicarPermissoesDeAcesso() {
         if (!usuarioLogado) return;
 
@@ -25482,7 +26206,7 @@ function carregarTabelaOleo(dados) {
             'tab-motoristas', 'tab-viaturas', 'tab-servicos', 'tab-servidores',
             'tab-abastecimentos', 'tab-relatorio-abastecimentos', 'tab-prospeccao',
             'tab-troca-oleo', 'tab-manutencao', 'tab-check-viatura', 'tab-pagamentos',
-            'tab-usuarios'
+            'tab-usuarios', 'tab-logs'
         ];
 
         let primeiraAbaDisponivel = null;
@@ -25637,6 +26361,8 @@ function carregarTabelaOleo(dados) {
             dados.usuarios.push({ nome, login, senha: senhaHash(senha), nivel, permissoes });
         }
 
+        const acaoUsu = index >= 0 ? `Edição de Usuário: ${login}` : `Criação de Usuário: ${login}`;
+        registrarLog('Usuário / Permissões', acaoUsu, `Usuário ${nome} (${login}) cadastrado/atualizado com nível ${nivel}`, dados);
         salvarDados(dados);
         cancelarEdicaoUsu();
         carregarTabelaUsuarios(dados);
@@ -25716,13 +26442,228 @@ function carregarTabelaOleo(dados) {
         }
 
         openConfirmModal(`Deseja excluir o usuário ${dados.usuarios[i].nome}?`, () => {
+            const uDel = dados.usuarios[i];
             dados.usuarios.splice(i, 1);
+            registrarLog('Usuário / Permissões', `Exclusão de Usuário: ${uDel ? uDel.login : i}`, `Usuário ${uDel ? uDel.nome : ''} (${uDel ? uDel.login : ''}) excluído do sistema`, dados);
             salvarDados(dados);
             carregarTabelaUsuarios(dados);
-        atualizarVisualGeral(dados);
+            atualizarVisualGeral(dados);
             showToast('Usuário excluído.', 'success');
         });
     };
+
+    // --- SISTEMA DE LOGS DE AUDITORIA ---
+    function registrarLog(categoria, acao, detalhes, dadosObj = null) {
+        try {
+            const dados = dadosObj || carregarDados();
+            if (!dados) return;
+            if (!dados.logsSistema) dados.logsSistema = [];
+
+            const usuarioAtual = (typeof usuarioLogado !== 'undefined' && usuarioLogado) 
+                ? `${usuarioLogado.nome || usuarioLogado.login} (${usuarioLogado.nivel || 'Operador'})` 
+                : 'Sistema / Automático';
+
+            const entrada = {
+                id: 'log_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                dataHora: new Date().toLocaleString('pt-BR'),
+                timestamp: Date.now(),
+                usuario: usuarioAtual,
+                categoria: categoria || 'Geral',
+                acao: acao || 'Alteração de Dados',
+                detalhes: detalhes || 'Registro atualizado no sistema'
+            };
+
+            dados.logsSistema.unshift(entrada);
+
+            // Limite de segurança para até 2000 logs em memória/arquivo
+            if (dados.logsSistema.length > 2000) {
+                dados.logsSistema = dados.logsSistema.slice(0, 2000);
+            }
+        } catch (e) {
+            console.error("Erro ao gravar log de auditoria:", e);
+        }
+    }
+
+    function carregarTabelaLogs(dados = null) {
+        if (!dados) dados = carregarDados();
+        if (!dados) return;
+        if (!dados.logsSistema) dados.logsSistema = [];
+
+        const logs = dados.logsSistema;
+
+        // Atualizar estatísticas dos cards
+        const statTotal = document.getElementById('stat-logs-total');
+        const statFct = document.getElementById('stat-logs-fct');
+        const statUsuarios = document.getElementById('stat-logs-usuarios');
+        const statHoje = document.getElementById('stat-logs-hoje');
+
+        if (statTotal) statTotal.textContent = logs.length;
+        if (statFct) {
+            const fcts = logs.filter(l => (l.categoria || '').includes('FCT') || (l.acao || '').includes('FCT')).length;
+            statFct.textContent = fcts;
+        }
+        if (statUsuarios) {
+            const usuariosUnicos = new Set(logs.map(l => (l.usuario || '').split(' (')[0]).filter(Boolean));
+            statUsuarios.textContent = usuariosUnicos.size;
+        }
+        if (statHoje) {
+            const hojeDataStr = new Date().toLocaleDateString('pt-BR');
+            const registrosHoje = logs.filter(l => (l.dataHora || '').startsWith(hojeDataStr)).length;
+            statHoje.textContent = registrosHoje;
+        }
+
+        // Exibir botão de limpeza de logs para Master
+        const btnLimpar = document.getElementById('btnLimparLogsMaster');
+        if (btnLimpar) {
+            const isMaster = typeof usuarioLogado !== 'undefined' && usuarioLogado && (usuarioLogado.nivel === 'Master' || usuarioLogado.login === 'master');
+            btnLimpar.style.display = isMaster ? 'inline-flex' : 'none';
+        }
+
+        // Preencher dropdown de usuários nos filtros
+        const selectUsuario = document.getElementById('filtro-log-usuario');
+        if (selectUsuario) {
+            const valAtual = selectUsuario.value;
+            const listaUsuarios = Array.from(new Set(logs.map(l => l.usuario).filter(Boolean))).sort();
+            selectUsuario.innerHTML = '<option value="">Todos os Usuários</option>';
+            listaUsuarios.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u;
+                opt.textContent = u;
+                selectUsuario.appendChild(opt);
+            });
+            if (valAtual && listaUsuarios.includes(valAtual)) {
+                selectUsuario.value = valAtual;
+            }
+        }
+
+        filtrarTabelaLogs();
+    }
+
+    function filtrarTabelaLogs() {
+        const dados = carregarDados();
+        if (!dados) return;
+        const logs = dados.logsSistema || [];
+
+        const busca = (document.getElementById('filtro-log-busca')?.value || '').toLowerCase().trim();
+        const usuarioFiltro = (document.getElementById('filtro-log-usuario')?.value || '').trim();
+        const catFiltro = (document.getElementById('filtro-log-categoria')?.value || '').trim();
+
+        const filtrados = logs.filter(l => {
+            if (usuarioFiltro && (l.usuario || '').trim() !== usuarioFiltro) return false;
+            if (catFiltro && !(l.categoria || '').toLowerCase().includes(catFiltro.toLowerCase())) return false;
+
+            if (busca) {
+                const str = [l.dataHora, l.usuario, l.categoria, l.acao, l.detalhes].map(v => (v || '').toLowerCase()).join(' ');
+                if (!str.includes(busca)) return false;
+            }
+            return true;
+        });
+
+        renderizarLinhasTabelaLogs(filtrados);
+    }
+
+    function renderizarLinhasTabelaLogs(lista) {
+        const tbody = document.querySelector('#tabelaLogsSistema tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        if (!lista || lista.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 13.5px;">
+                        <i class="fa-regular fa-clipboard" style="font-size: 26px; display: block; margin-bottom: 8px; opacity: 0.6;"></i>
+                        Nenhum registro de log encontrado.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        lista.forEach((l, idx) => {
+            const tr = document.createElement('tr');
+            tr.style.background = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+
+            let badgeCatClass = 'badge-info';
+            if ((l.categoria || '').includes('FCT')) badgeCatClass = 'badge-success';
+            if ((l.categoria || '').includes('Manutenção')) badgeCatClass = 'badge-warning';
+            if ((l.categoria || '').includes('Usuário')) badgeCatClass = 'badge-purple';
+
+            tr.innerHTML = `
+                <td style="text-align:center; vertical-align:middle; white-space:nowrap; font-family:monospace; font-size:12px; color:#475569;">
+                    ${l.dataHora || '—'}
+                </td>
+                <td style="text-align:left; vertical-align:middle; font-weight:700; color:#0f172a;">
+                    <i class="fa-solid fa-user-gear" style="color:#0284c7; margin-right:5px;"></i> ${l.usuario || 'Desconhecido'}
+                </td>
+                <td style="text-align:center; vertical-align:middle;">
+                    <span class="${badgeCatClass}">${l.categoria || 'Geral'}</span>
+                </td>
+                <td style="text-align:left; vertical-align:middle; font-weight:600; color:#1e293b;">
+                    ${l.acao || 'Ação'}
+                </td>
+                <td style="text-align:left; vertical-align:middle; font-size:12.5px; color:#334155; line-height:1.4;">
+                    ${l.detalhes || '—'}
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function limparFiltrosLogs() {
+        const inputBusca = document.getElementById('filtro-log-busca');
+        const selUser = document.getElementById('filtro-log-usuario');
+        const selCat = document.getElementById('filtro-log-categoria');
+
+        if (inputBusca) inputBusca.value = '';
+        if (selUser) selUser.value = '';
+        if (selCat) selCat.value = '';
+
+        filtrarTabelaLogs();
+    }
+
+    function exportarLogsCSV() {
+        const dados = carregarDados();
+        const logs = dados.logsSistema || [];
+        if (!logs.length) {
+            showToast('Não há registros de log para exportar.', 'warning');
+            return;
+        }
+
+        let csv = '\uFEFFData/Hora;Usuário;Categoria;Ação;Detalhes\n';
+        logs.forEach(l => {
+            const dataStr = `"${(l.dataHora || '').replace(/"/g, '""')}"`;
+            const userStr = `"${(l.usuario || '').replace(/"/g, '""')}"`;
+            const catStr = `"${(l.categoria || '').replace(/"/g, '""')}"`;
+            const acaoStr = `"${(l.acao || '').replace(/"/g, '""')}"`;
+            const detStr = `"${(l.detalhes || '').replace(/"/g, '""')}"`;
+            csv += `${dataStr};${userStr};${catStr};${acaoStr};${detStr}\n`;
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `logs_auditoria_sistema_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Logs de auditoria exportados com sucesso!', 'success');
+    }
+
+    function limparHistoricoLogsMaster() {
+        if (!usuarioLogado || (usuarioLogado.nivel !== 'Master' && usuarioLogado.login !== 'master')) {
+            showToast('Apenas o Administrador Master pode limpar os logs de auditoria!', 'error');
+            return;
+        }
+
+        openConfirmModal('⚠️ ATENÇÃO: Deseja realmente apagar TODO o histórico de logs do sistema? Esta ação é irreversível.', () => {
+            const dados = carregarDados();
+            dados.logsSistema = [];
+            registrarLog('Usuário / Sistema', 'Limpeza de Logs', 'Histórico completo de logs apagado pelo Administrador Master', dados);
+            salvarDados(dados);
+            carregarTabelaLogs(dados);
+            showToast('Logs de auditoria zerados com sucesso.', 'warning');
+        });
+    }
 
 
     
@@ -25904,5 +26845,482 @@ function carregarTabelaOleo(dados) {
         document.addEventListener('keydown', encerrar);
     })();
 </script>
+
+<style id="sigadi-ui">
+/* ═══════════════════════════════════════════════════════════════
+   SIGADI — SISTEMA DE DESIGN (visual de aplicativo corporativo)
+   Camada final: padroniza tipografia, formulários, botões, tabelas,
+   cartões, modais e telas de acesso em todo o sistema.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+    --primary: #2563eb; --primary-hover: #1d4ed8; --secondary: #0ea5e9;
+    --bg: #f4f7fb; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+    --border: #dbe3ee; --success: #059669; --danger: #dc2626; --danger-hover: #b91c1c;
+}
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body { font-family: 'Inter', 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 14px; letter-spacing: -0.003em; background: #f4f7fb; }
+button, input, select, textarea { font-family: inherit; }
+* { scrollbar-width: thin; scrollbar-color: #c3cddb transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #c3cddb; border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: #9aa9bf; background-clip: content-box; border: 3px solid transparent; }
+::-webkit-scrollbar-track { background: transparent; }
+:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
+::selection { background: rgba(37,99,235,.2); }
+
+/* ---------- Cabeçalho da página ---------- */
+.app-layout .main-content { background: #f4f7fb; }
+.app-topbar { margin-bottom: 0; }
+.page-head { margin: 22px 0 18px; }
+.page-head h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #0f172a; line-height: 1.2; }
+.page-head p { margin-top: 5px; font-size: 13.5px; color: #64748b; line-height: 1.5; }
+
+/* ---------- Cartão principal de cada tela ---------- */
+.tab-content { background: #ffffff !important; border: 1px solid #e3e9f2 !important; border-radius: 16px !important; min-height: 240px;
+    box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 10px 28px -14px rgba(15,23,42,.10) !important; }
+.tab-content:not(#tab-manutencao) { padding: 28px !important; }
+.tab-content::before { opacity: .035 !important; background-size: min(360px, 55%) auto !important; }
+
+/* ---------- Títulos de seção ---------- */
+.tab-content .form-section-title, .modal-box .form-section-title {
+    display: flex; align-items: center; gap: 10px; font-size: 12px !important; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    color: #475569 !important; border-bottom: 1px solid #e8edf4 !important; padding: 0 0 12px !important; margin: 6px 0 18px !important; }
+.tab-content .form-section-title::before, .modal-box .form-section-title::before {
+    content: ""; width: 4px; height: 16px; border-radius: 4px; background: linear-gradient(180deg, #2563eb, #0ea5e9); flex-shrink: 0; }
+
+/* ---------- Formulários estilo Windows 11 / Fluent UI ---------- */
+.tab-content label, .modal-box label { font-size: 12.5px !important; font-weight: 600 !important; color: #334155 !important; letter-spacing: 0; }
+input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]):not([type=hidden]), select, textarea {
+    padding: 9px 12px; border: 1px solid #cbd5e1; border-bottom: 2px solid #94a3b8; border-radius: 8px; background-color: #ffffff; color: #0f172a;
+    font-size: 13.5px; line-height: 1.4; box-shadow: 0 1px 2px rgba(15,23,42,.03); transition: all .15s ease-in-out; }
+input::placeholder, textarea::placeholder { color: #94a3b8; }
+input:not([type=checkbox]):not([type=radio]):hover, select:hover, textarea:hover { border-color: #0284c7; border-bottom-color: #0284c7; background-color: #f8fafc; }
+input:not([type=checkbox]):not([type=radio]):focus, select:focus, textarea:focus {
+    border-color: #0284c7; border-bottom: 2px solid #0284c7; box-shadow: 0 0 0 3px rgba(2,132,199,.15); background-color: #ffffff; outline: none; }
+input[readonly], input:disabled, select:disabled, textarea:disabled, textarea[readonly] {
+    background-color: #f1f5f9 !important; color: #64748b !important; cursor: not-allowed; opacity: 1; border-color: #e2e8f0; border-bottom-color: #cbd5e1; box-shadow: none; }
+select:not([multiple]) { appearance: none; -webkit-appearance: none; padding-right: 34px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23475569' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; }
+input:not([type=checkbox]):not([type=radio]):not([type=file]), select, textarea { min-width: 0; max-width: 100%; }
+input[type=checkbox], input[type=radio] { accent-color: #0284c7; width: 16px; height: 16px; cursor: pointer; }
+input[type=file] { font-size: 13px; color: #475569; padding: 6px !important; background: #fff; border-radius: 8px; }
+input[type=file]::file-selector-button { margin-right: 10px; padding: 6px 14px; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc;
+    color: #1e293b; font-weight: 600; font-size: 12.5px; cursor: pointer; transition: .15s; }
+input[type=file]::file-selector-button:hover { background: #e2e8f0; border-color: #94a3b8; }
+.form-grid { gap: 16px 14px; }
+
+/* ---------- Botões Estilo Windows 11 / Fluent ---------- */
+.btn-submit, .btn-success, .btn-danger, .btn-salvar, .btn-action, .btn-secondary, .btn-cancel, .btn-cancelar, .btn-fechar, .btn-pular, .btn-edit-sm {
+    font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.2; border-radius: 8px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .15s ease-in-out; }
+.btn-submit, .btn-success, .btn-danger, .btn-salvar { padding: 9px 18px; border: 1px solid transparent; color: #fff; }
+.btn-submit, .btn-salvar { background: #0284c7; border-color: #0284c7; box-shadow: 0 1px 2px rgba(2,132,199,.2), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-submit:hover, .btn-salvar:hover { background: #0369a1; border-color: #0369a1; box-shadow: 0 4px 10px rgba(2,132,199,.3); }
+.btn-success { background: #059669; border-color: #059669; box-shadow: 0 1px 2px rgba(5,150,105,.2), inset 0 1px 0 rgba(255,255,255,.2); }
+.btn-success:hover { background: #047857; border-color: #047857; box-shadow: 0 4px 10px rgba(5,150,105,.3); }
+.btn-danger { background: #dc2626; border-color: #dc2626; box-shadow: 0 1px 2px rgba(220,38,38,.2); padding: 8px 16px; }
+.btn-danger:hover { background: #b91c1c; border-color: #b91c1c; box-shadow: 0 4px 10px rgba(220,38,38,.3); }
+.btn-submit:active, .btn-success:active, .btn-danger:active, .btn-salvar:active { transform: translateY(1px); }
+.btn-action, .btn-secondary, .btn-cancel, .btn-cancelar, .btn-fechar {
+    padding: 8px 16px; background: #ffffff; color: #334155; border: 1px solid #cbd5e1; border-bottom: 2px solid #94a3b8; box-shadow: 0 1px 2px rgba(15,23,42,.03); }
+.btn-action:hover, .btn-secondary:hover, .btn-cancel:hover, .btn-cancelar:hover, .btn-fechar:hover { background: #f8fafc; border-color: #0284c7; color: #0284c7; }
+.btn-action.danger { color: #dc2626; border-color: #fca5a5; border-bottom-color: #f87171; background: #fef2f2; }
+.btn-action.danger:hover { background: #dc2626; color: #fff; border-color: #dc2626; }
+.btn-icon, .btn-icon-danger { border-radius: 6px; transition: .15s; }
+:where(button:not([class]):not([style])) { padding: 8px 14px; background: #ffffff; color: #334155; border: 1px solid #cbd5e1; border-bottom: 2px solid #94a3b8; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s; }
+:where(button:not([class]):not([style])):hover { background: #f8fafc; border-color: #0284c7; color: #0284c7; }
+button:disabled, .btn-submit:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
+
+/* ---------- Tabelas Modernas ---------- */
+.table-wrapper { background: #fff !important; border: 1px solid #e2e8f0 !important; border-radius: 10px !important; box-shadow: 0 1px 3px rgba(15,23,42,.03); }
+.tab-content table { font-size: 13px; margin-top: 0; }
+.tab-content th, th {
+    background: #f1f5f9 !important; color: #334155 !important; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    padding: 11px 14px; border-bottom: 2px solid #b0bec5 !important; border-right: 1px solid #cbd5e1 !important; }
+.tab-content th:last-child, th:last-child { border-right: none !important; }
+.tab-content td, td { padding: 11px 14px; border-bottom: 1px solid #d1d9e6 !important; border-right: 1px solid #e2e8f0 !important; color: #334155 !important; }
+.tab-content td:last-child, td:last-child { border-right: none !important; }
+.tab-content tbody tr { transition: background-color .12s; }
+.tab-content tbody tr:hover td { background-color: #f0f9ff !important; }
+.tab-content tr:last-child td { border-bottom: none !important; }
+
+/* ---------- Cartões de indicadores ---------- */
+.tab-content .stat-card { border: 1px solid #e2e8f0 !important; border-radius: 12px !important; padding: 16px 18px !important; background: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(15,23,42,.04); transition: box-shadow .15s, transform .15s; }
+.tab-content .stat-card:hover { box-shadow: 0 6px 18px -6px rgba(15,23,42,.12); transform: translateY(-1px); }
+.tab-content .stat-card-info h4 { font-size: 11px !important; font-weight: 700 !important; letter-spacing: .06em; text-transform: uppercase; color: #64748b !important; }
+.tab-content .stat-card-info p { font-size: 22px !important; font-weight: 800 !important; letter-spacing: -.02em; }
+.stats-strip { gap: 14px; }
+
+/* ---------- Selos ---------- */
+.badge-info, .badge-success, .badge-purple, .badge-danger, .badge-warning, .badge-secondary {
+    border-radius: 6px !important; padding: 3px 9px !important; font-size: 11px !important; font-weight: 700; letter-spacing: .02em; }
+
+/* ---------- Janelas (modais) estilo Windows ---------- */
+.modal-overlay { background: rgba(15,23,42,.45) !important; backdrop-filter: blur(4px); }
+.modal-box, .modal-card { border-radius: 14px !important; border: 1px solid #cbd5e1 !important; box-shadow: 0 24px 60px -15px rgba(15,23,42,.35) !important; }
+.modal-title { font-weight: 800; letter-spacing: -.01em; }
+.modal-actions { gap: 10px; }
+.custom-toast { border-radius: 12px !important; box-shadow: 0 14px 34px -10px rgba(15,23,42,.35) !important; font-weight: 500; }
+
+/* ---------- Telas de acesso (login e banco de dados) ---------- */
+#login-screen, #local-file-overlay { background: radial-gradient(ellipse at 50% 15%, #1e3a8a 0%, #0b1e4a 55%, #060d24 100%) !important; }
+#login-screen > div, #local-file-overlay > div { border: 0 !important; border-radius: 20px !important; padding: 40px 38px !important;
+    box-shadow: 0 40px 90px -20px rgba(2,8,23,.65) !important; }
+#login-screen h2, #local-file-overlay h2 { font-weight: 800 !important; letter-spacing: -.02em; }
+#login-screen .btn-submit { width: 100%; height: 46px; font-size: 14.5px; }
+#local-file-overlay .btn-action { height: 48px; }
+
+@media (max-width: 768px) {
+    .page-head { margin: 16px 0 14px; } .page-head h1 { font-size: 20px; }
+    .tab-content:not(#tab-manutencao) { padding: 18px !important; }
+}
+</style>
+
+<style id="sigadi-win11">
+/* ═══════════════════════════════════════════════════════════════
+   SIGADI — TEMA WINDOWS 11 (Fluent Design)
+   Mica claro, controles com cantos de 4px, cartões de 8px,
+   menu de navegação lateral e cor de destaque azul do Windows.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+    --w-accent: #0067c0; --w-accent-h: #1975c5; --w-accent-a: #3283ca; --w-accent-dk: #00539a;
+    --w-mica: #f3f3f3; --w-card: #ffffff; --w-line: #e5e5e5; --w-line2: #d1d1d1; --w-line-b: #8a8a8a;
+    --w-text: #1a1a1a; --w-text2: #5d5d5d; --w-hover: rgba(0,0,0,.045); --w-press: rgba(0,0,0,.07);
+    --primary: #0067c0; --primary-hover: #1975c5; --secondary: #0067c0;
+    --bg: #f3f3f3; --card-bg: #ffffff; --text-main: #1a1a1a; --text-muted: #5d5d5d; --border: #e5e5e5;
+    --success: #0f7b0f; --danger: #c42b1c; --danger-hover: #a52416;
+}
+html, body { font-family: 'Segoe UI Variable Text', 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; letter-spacing: 0; background: var(--w-mica); color: var(--w-text); }
+button, input, select, textarea { font-family: inherit; }
+h1, h2, h3, .page-head h1, .modal-title { font-family: 'Segoe UI Variable Display', 'Segoe UI Variable', 'Segoe UI', system-ui, sans-serif; }
+* { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.32) transparent; }
+::-webkit-scrollbar { width: 14px; height: 14px; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,.32); border-radius: 8px; border: 4px solid transparent; background-clip: content-box; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,.5); background-clip: content-box; border: 4px solid transparent; }
+:focus-visible { outline: 2px solid var(--w-accent); outline-offset: 2px; border-radius: 4px; }
+::selection { background: rgba(0,103,192,.25); }
+
+/* ---------- Barra lateral (NavigationView do Windows 11) ---------- */
+body .app-layout { background: var(--w-mica); --sb-w: 290px; --sb-w-min: 64px; --tb-h: 52px; }
+body .app-layout .sidebar { background: var(--w-mica); color: var(--w-text); border-right: 1px solid var(--w-line); box-shadow: none; }
+body .sb-brand { min-height: 60px; border-bottom: 0; padding: 0 16px; gap: 12px; }
+body .sb-logo { width: 34px; height: 34px; border-radius: 6px; background: #fff; border: 1px solid var(--w-line); padding: 3px; }
+body .sb-brand-text strong { color: var(--w-text); font-size: 15px; font-weight: 700; letter-spacing: .06em; }
+body .sb-brand-text span { color: var(--w-text2); font-size: 10.5px; font-weight: 400; letter-spacing: 0; text-transform: none; margin-top: 2px; }
+body .sb-org { background: transparent; border-bottom: 0; color: var(--w-text2); font-size: 11.5px; padding: 0 16px 10px; }
+body .sb-label { color: var(--w-text2); font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; padding: 10px 12px 6px; }
+body .app-layout .sidebar-nav { padding: 6px 10px 8px; }
+body .app-layout .menu-category { min-height: 44px; max-height: 70px; }
+body .app-layout .menu-header-button, body .app-layout .sidebar-nav > .tab-button {
+    min-height: 44px; padding: 0 12px; border-radius: 6px; color: var(--w-text); font-size: 14px; font-weight: 400; background: transparent; }
+body .app-layout .menu-header-button > span, body .app-layout .sidebar-nav > .tab-button { gap: 14px; }
+body .app-layout .menu-header-button > span i, body .app-layout .sidebar-nav > .tab-button > i {
+    width: 20px; height: 20px; border-radius: 0; background: none; box-shadow: none; color: #3b3b3b; font-size: 15px; }
+body .app-layout .menu-header-button:hover, body .app-layout .sidebar-nav > .tab-button:hover { background: var(--w-hover); color: var(--w-text); }
+body .app-layout .menu-header-button:active, body .app-layout .sidebar-nav > .tab-button:active { background: var(--w-press); }
+body .app-layout .menu-header-button.active-header, body .app-layout .sidebar-nav > .tab-button.active { background: var(--w-press); color: var(--w-text); font-weight: 600; }
+body .app-layout .menu-header-button.active-header::before, body .app-layout .sidebar-nav > .tab-button.active::before {
+    left: 0; top: 50%; bottom: auto; height: 18px; width: 3px; transform: translateY(-50%); border-radius: 3px; background: var(--w-accent); }
+body .app-layout .menu-header-button.active-header > span i, body .app-layout .sidebar-nav > .tab-button.active > i { background: none; box-shadow: none; color: var(--w-accent); }
+body .app-layout .arrow-icon { color: var(--w-text2); font-size: 10px; }
+body .app-layout .submenu-container { margin: 2px 0 4px 0; padding: 0 0 0 20px; border-left: 0; gap: 2px; }
+body .app-layout .submenu-container .tab-button { position: relative; min-height: 36px; padding: 6px 12px 6px 34px; border-radius: 6px; font-size: 13.5px; font-weight: 400; color: var(--w-text); }
+body .app-layout .submenu-container .tab-button i { display: none; }
+body .app-layout .submenu-container .tab-button:hover { background: var(--w-hover); color: var(--w-text); }
+body .app-layout .submenu-container .tab-button.active { background: var(--w-press); color: var(--w-text); font-weight: 600; box-shadow: none; }
+body .app-layout .submenu-container .tab-button.active::before { content: ""; position: absolute; left: 14px; top: 50%; height: 16px; width: 3px; transform: translateY(-50%); border-radius: 3px; background: var(--w-accent); }
+body .app-layout .sidebar-footer { background: transparent; border-top: 1px solid var(--w-line); padding: 10px 12px 12px; }
+body .app-layout .sgf-avatar { background: var(--w-accent); color: #fff; box-shadow: none; }
+body .app-layout .sb-user #info-nome-user { color: var(--w-text); font-weight: 600; }
+body .app-layout .sgf-nivel { background: #ededed; color: #444; border-radius: 4px; }
+body .app-layout .sgf-nivel.sgf-nivel-master { background: #fff4ce; color: #6d5200; }
+body .app-layout .sgf-nivel.sgf-nivel-administrador { background: #deecf9; color: #0f4c8a; }
+body .sb-logout { border: 1px solid var(--w-line); background: #fff; color: #c42b1c; border-radius: 6px; }
+body .sb-logout:hover { background: #c42b1c; border-color: #c42b1c; color: #fff; }
+body .sb-credits { color: var(--w-text2); border-top: 0; padding-top: 2px; }
+body .sb-credits b { color: var(--w-text); }
+
+/* ---------- Barra de comandos superior ---------- */
+body .app-layout .main-content { background: var(--w-mica); padding: 0 32px 32px; }
+body .app-topbar { background: rgba(243,243,243,.86); backdrop-filter: blur(24px) saturate(1.4); border-bottom: 1px solid var(--w-line); box-shadow: none; padding: 0 20px; gap: 12px; }
+body .tb-icon-btn { width: 34px; height: 34px; border: 1px solid transparent; background: transparent; border-radius: 6px; color: var(--w-text); }
+body .tb-icon-btn:hover { background: var(--w-hover); border-color: transparent; color: var(--w-text); }
+body .tb-icon-btn:active { background: var(--w-press); }
+body .tb-crumbs { font-size: 13px; color: var(--w-text2); }
+body .tb-crumbs strong { font-size: 13px; font-weight: 600; color: var(--w-text); }
+body .tb-search { flex: 1 1 320px; min-width: 180px; max-width: 460px; }
+body .tb-search input { height: 34px; border: 1px solid var(--w-line); border-bottom-color: var(--w-line-b); border-radius: 6px; background: rgba(255,255,255,.8); font-size: 13px; padding: 0 12px 0 34px; box-shadow: none; }
+body .tb-search input:hover { background: #fff; }
+body .tb-search input:focus { background: #fff; border-color: var(--w-line); border-bottom-color: var(--w-accent); box-shadow: inset 0 -1px 0 var(--w-accent); }
+body .tb-search kbd { display: none; }
+body .tb-search-results { border-radius: 8px; border: 1px solid var(--w-line); box-shadow: 0 8px 16px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12); }
+body .tb-res { border-radius: 4px; }
+body .tb-res.sel, body .tb-res:hover { background: var(--w-hover); color: var(--w-text); }
+body .tb-clock { color: var(--w-text2); }
+body .tb-clock b { color: var(--w-text); font-weight: 600; }
+body .tb-status { border-radius: 4px; background: #dff6dd; border: 0; color: #0e700e; font-weight: 600; }
+body .tb-status.off { background: #fde7e9; color: #a80000; }
+body .tb-user-btn { border: 1px solid transparent; background: transparent; border-radius: 6px; height: 40px; }
+body .tb-user-btn:hover { background: var(--w-hover); border-color: transparent; }
+body .tb-avatar { background: var(--w-accent); }
+body .tb-user-menu { border-radius: 8px; border: 1px solid var(--w-line); box-shadow: 0 8px 16px rgba(0,0,0,.14), 0 0 2px rgba(0,0,0,.12); }
+body .um-item { border-radius: 4px; font-weight: 400; }
+body .um-item:hover { background: var(--w-hover); color: var(--w-text); }
+body .um-item:hover i { color: var(--w-text); }
+body .um-item.danger:hover { background: #fde7e9; }
+
+/* ---------- Título da página e cartão principal ---------- */
+body .page-head { margin: 20px 0 16px; }
+body .page-head h1 { font-size: 28px; font-weight: 600; letter-spacing: 0; color: var(--w-text); }
+body .page-head p { color: var(--w-text2); font-size: 13.5px; }
+body .tab-content { background: var(--w-card) !important; border: 1px solid var(--w-line) !important; border-radius: 8px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04) !important; }
+body .tab-content::before { opacity: .03 !important; }
+body .tab-content .form-section-title, body .modal-box .form-section-title {
+    position: relative; display: flex; align-items: center; gap: 8px; padding: 0 0 10px 14px !important; margin: 4px 0 16px !important;
+    font-size: 15px !important; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--w-text) !important; border-bottom: 1px solid #ededed !important; }
+body .tab-content .form-section-title::before, body .modal-box .form-section-title::before {
+    position: absolute; left: 0; top: 2px; width: 4px; height: 16px; border-radius: 4px; background: var(--w-accent); }
+body .tab-content .form-section-title i { color: var(--w-accent); }
+body .tab-content label, body .modal-box label { color: var(--w-text) !important; font-size: 13px !important; font-weight: 600 !important; }
+
+/* ---------- Campos (TextBox / ComboBox) ---------- */
+body input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not([type=color]):not([type=hidden]), body select, body textarea {
+    min-height: 34px; padding: 6px 11px; border: 1px solid var(--w-line2); border-bottom-color: var(--w-line-b); border-radius: 4px; background-color: #fff;
+    font-size: 14px; color: var(--w-text); box-shadow: none; }
+body input:not([type=checkbox]):not([type=radio]):not([type=file]):hover, body select:hover, body textarea:hover { background-color: #fafafa; border-color: var(--w-line2); border-bottom-color: var(--w-line-b); }
+body input:not([type=checkbox]):not([type=radio]):not([type=file]):focus, body select:focus, body textarea:focus {
+    background-color: #fff; border-color: var(--w-line2); border-bottom-color: var(--w-accent); box-shadow: inset 0 -1px 0 var(--w-accent); }
+body input[readonly], body input:disabled, body select:disabled, body textarea:disabled, body textarea[readonly] {
+    background-color: #f3f3f3 !important; color: var(--w-text2) !important; border-color: #e5e5e5; border-bottom-color: #d1d1d1; box-shadow: none; }
+body select:not([multiple]) { padding-right: 34px; background-position: right 12px center; }
+body input[type=checkbox], body input[type=radio] { accent-color: var(--w-accent); width: 18px; height: 18px; }
+body input[type=file] { border-radius: 4px; padding: 4px !important; }
+body input[type=file]::file-selector-button { border-radius: 4px; border: 1px solid var(--w-line2); border-bottom-color: #bdbdbd; background: #fdfdfd; font-weight: 400; padding: 5px 14px; }
+body input[type=file]::file-selector-button:hover { background: #f6f6f6; }
+
+/* ---------- Botões ---------- */
+body .btn-submit, body .btn-success, body .btn-danger, body .btn-salvar, body .btn-action, body .btn-secondary, body .btn-cancel, body .btn-cancelar, body .btn-fechar, body .btn-pular, body .btn-edit-sm,
+body .tab-content button[onclick*="input-excel"] {
+    border-radius: 4px; font-size: 14px; font-weight: 400; min-height: 34px; padding: 6px 18px; gap: 8px; box-shadow: none; letter-spacing: 0; }
+body .btn-submit, body .btn-salvar { background: var(--w-accent); border: 1px solid var(--w-accent); border-bottom-color: var(--w-accent-dk); color: #fff; }
+body .btn-submit:hover, body .btn-salvar:hover { background: var(--w-accent-h); border-color: var(--w-accent-h); box-shadow: none; }
+body .btn-submit:active, body .btn-salvar:active { background: var(--w-accent-a); transform: none; color: rgba(255,255,255,.85); }
+body .btn-success { background: #0f7b0f; border: 1px solid #0f7b0f; border-bottom-color: #0a5c0a; color: #fff; }
+body .btn-success:hover { background: #107c10; box-shadow: none; filter: brightness(1.12); }
+body .btn-danger { background: #c42b1c; border: 1px solid #c42b1c; border-bottom-color: #8e1f14; color: #fff; }
+body .btn-danger:hover { background: #d13a2b; box-shadow: none; }
+body .btn-action, body .btn-secondary, body .btn-cancel, body .btn-cancelar, body .btn-fechar, body .btn-pular, body .btn-edit-sm,
+body .tab-content button[onclick*="input-excel"] {
+    background: #fdfdfd; color: var(--w-text); border: 1px solid var(--w-line2); border-bottom-color: #bdbdbd; }
+body .btn-action:hover, body .btn-secondary:hover, body .btn-cancel:hover, body .btn-cancelar:hover, body .btn-fechar:hover, body .btn-pular:hover, body .btn-edit-sm:hover,
+body .tab-content button[onclick*="input-excel"]:hover { background: #f6f6f6; border-color: var(--w-line2); }
+body .btn-action:active, body .btn-secondary:active, body .btn-cancel:active, body .btn-cancelar:active, body .tab-content button[onclick*="input-excel"]:active { background: #ededed; }
+body .tab-content button[onclick*="input-excel"] i { color: #107c41; }
+body .btn-action.danger { background: #fdfdfd; color: #c42b1c; border-color: var(--w-line2); }
+body .btn-action.danger:hover { background: #c42b1c; color: #fff; border-color: #c42b1c; }
+body .btn-icon, body .btn-icon-danger { border-radius: 4px; }
+body :where(button:not([class]):not([style])) { border-radius: 4px; background: #fdfdfd; border: 1px solid var(--w-line2); border-bottom-color: #bdbdbd; font-weight: 400; }
+body :where(button:not([class]):not([style])):hover { background: #f6f6f6; }
+
+/* ---------- Tabelas (DataGrid) ---------- */
+body .table-wrapper { border: 1px solid var(--w-line) !important; border-radius: 8px !important; background: #fff !important; box-shadow: none; }
+body .tab-content th, body th { background: #fafafa !important; color: var(--w-text2) !important; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; padding: 10px 14px; border-bottom: 1px solid var(--w-line) !important; }
+body .tab-content td, body td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0 !important; color: var(--w-text) !important; }
+body .tab-content tbody tr:hover td { background-color: #f5f5f5 !important; }
+
+/* ---------- Cartões de indicadores ---------- */
+body .tab-content .stat-card, body .stat-box { background: #fff; border: 1px solid var(--w-line) !important; border-radius: 8px !important; box-shadow: none; padding: 14px 16px; }
+body .tab-content .stat-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.08); transform: none; }
+body .tab-content .stat-card-info h4, body .stat-title { font-size: 12px !important; font-weight: 600 !important; letter-spacing: 0; text-transform: none; color: var(--w-text2) !important; }
+body .tab-content .stat-card-info p, body .stat-value { font-size: 22px; font-weight: 600 !important; letter-spacing: 0; color: var(--w-text); }
+body .stat-title { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+
+/* ---------- Selos, janelas e avisos ---------- */
+body .badge-info, body .badge-success, body .badge-purple, body .badge-danger, body .badge-warning, body .badge-secondary { border-radius: 4px !important; font-weight: 600; padding: 2px 8px !important; font-size: 11.5px !important; }
+body .modal-overlay { background: rgba(0,0,0,.4) !important; backdrop-filter: none; }
+body .modal-box, body .modal-card { border-radius: 8px !important; border: 1px solid var(--w-line) !important; box-shadow: 0 32px 64px rgba(0,0,0,.28), 0 2px 21px rgba(0,0,0,.22) !important; }
+body .modal-title { font-size: 20px; font-weight: 600; letter-spacing: 0; }
+body .custom-toast { border-radius: 8px !important; box-shadow: 0 8px 16px rgba(0,0,0,.18), 0 0 2px rgba(0,0,0,.12) !important; font-weight: 400; }
+
+/* ---------- Acesso (login / banco de dados) — estilo tela de entrada do Windows ---------- */
+body #login-screen, body #local-file-overlay {
+    background: radial-gradient(60% 70% at 18% 18%, rgba(110,200,255,.75) 0%, transparent 60%),
+                radial-gradient(65% 70% at 88% 85%, rgba(0,60,170,.85) 0%, transparent 62%),
+                linear-gradient(135deg, #0a3d91 0%, #0067c0 50%, #5fb0f0 100%) !important; }
+body #login-screen > div, body #local-file-overlay > div { background: rgba(255,255,255,.88) !important; backdrop-filter: blur(30px) saturate(1.5); border: 1px solid rgba(255,255,255,.6) !important;
+    border-radius: 8px !important; box-shadow: 0 32px 64px rgba(0,0,0,.35) !important; }
+body #login-screen h2, body #local-file-overlay h2 { color: var(--w-text) !important; font-weight: 600 !important; letter-spacing: 0; }
+body #login-screen .btn-submit { height: 40px; }
+
+/* ---------- Correções de layout ---------- */
+body .rel-qtd, body .tab-content .rel-qtd { white-space: nowrap; min-width: 96px; text-align: right; }
+body .rel-nome, body .tab-content .rel-nome { min-width: 0; }
+body .rel-item, body .tab-content .rel-item { border-radius: 8px; }
+body .form-grid > .form-group, body .form-grid > div { min-width: 0; }
+body #cards-pagamentos { gap: 12px; }
+body .grid-layout > div { min-width: 0; }
+@media (max-width: 1280px) { body .tb-clock { display: none; } }
+@media (max-width: 1100px) { body .tb-status { display: none; } }
+@media (max-width: 768px) {
+    body .page-head h1 { font-size: 22px; }
+    body .app-layout .main-content { padding: 0 14px 24px; }
+    body .app-topbar { padding: 0 12px; }
+}
+
+/* ---------- Ajustes finais ---------- */
+body .tb-clock { white-space: nowrap; flex-shrink: 0; text-transform: none; }
+body .tb-status { white-space: nowrap; flex-shrink: 0; }
+body .tb-crumbs { flex-shrink: 0; }
+body .tb-crumbs strong { overflow: visible; }
+body .tb-search { flex: 1 1 220px; }
+body .tb-right { flex-shrink: 0; }
+@media (max-width: 1240px) { body .tb-crumb-mod, body .tb-crumbs > i { display: none; } }
+@media (min-width: 1024px) { body .grid-layout.split-view { grid-template-columns: 350px minmax(0, 1fr); gap: 28px; } }
+body .tab-content td, body .tab-content th { padding: 9px 12px; }
+
+body .tab-content button[onclick*="input-excel"] { background: #fdfdfd !important; color: var(--w-text) !important; border: 1px solid var(--w-line2) !important;
+    border-bottom-color: #bdbdbd !important; border-radius: 4px !important; padding: 6px 14px !important; font-weight: 400 !important; font-size: 13.5px !important; white-space: nowrap; }
+body .tab-content button[onclick*="input-excel"]:hover { background: #f6f6f6 !important; }
+
+/* ---------- Menu lateral compacto (itens mais próximos) ---------- */
+body .sb-modules { flex: 0 0 auto; justify-content: flex-start; gap: 2px; }
+body .app-layout .menu-category, body .app-layout .menu-category:has(.submenu-container.open) { flex: 0 0 auto; min-height: 0; max-height: none; }
+body .app-layout .menu-header-button, body .app-layout .sidebar-nav > .tab-button { flex: 0 0 auto; min-height: 40px; }
+body .app-layout .submenu-container { margin: 2px 0 2px 0; gap: 1px; }
+body .app-layout .submenu-container .tab-button { min-height: 34px; padding-top: 5px; padding-bottom: 5px; }
+body .sb-admin-label { margin-top: 10px; }
+</style>
+
+
+
+<style id="sgf-pro">
+/* ═══════════════════════════════════════════════════════════════
+   SIGADI — CAMADA VISUAL PADRÃO
+   Modelo: aba "Tabela de Temporalidade". Leva o mesmo acabamento
+   (tabelas limpas, cabeçalho em caixa-alta, selos arredondados,
+   botões de ação coloridos, painéis definidos) para as demais abas.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ---------- Painéis: formulário | lista ---------- */
+body .tab-content .grid-layout.split-view { align-items: start; gap: 22px; }
+body .tab-content .grid-layout.split-view > div {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px 22px;
+    box-shadow: 0 1px 3px rgba(15,23,42,.04); }
+body .tab-content .grid-layout.split-view > div:first-child { background: #fbfcfe; }
+body .tab-content .grid-layout:not(.split-view) { gap: 14px; }
+
+/* Cabeçalho do painel: título à esquerda, ações à direita, linha fina embaixo */
+body .tab-content div[style*="space-between"]:has(> .form-section-title) {
+    align-items: center; flex-wrap: wrap; gap: 10px 14px; border-bottom: 1px solid #e8edf4; padding: 0 0 12px; margin: 0 0 18px !important; }
+body .tab-content div[style*="space-between"] > .form-section-title {
+    border-bottom: 0 !important; margin: 0 !important; padding: 0 0 0 14px !important; flex: 1 1 auto; min-width: 0; }
+body .tab-content .form-section-title { position: relative; }
+body .tab-content .form-section-title::before { position: absolute; left: 0; top: 50%; transform: translateY(-50%); }
+body .tab-content .form-section-title { padding-left: 14px !important; }
+
+/* Rótulos e campos mais definidos */
+body .tab-content label { font-size: 12px !important; font-weight: 700 !important; color: #475569 !important; letter-spacing: .01em; margin-bottom: 4px; }
+body .tab-content .form-group { margin-bottom: 0; }
+body .tab-content .form-grid { gap: 14px 16px; }
+body .tab-content input:not([type=checkbox]):not([type=radio]):not([type=file]),
+body .tab-content select, body .tab-content textarea { border-color: #cbd5e1; border-radius: 8px; min-height: 38px; }
+body .tab-content input:not([type=checkbox]):not([type=radio]):not([type=file]):focus,
+body .tab-content select:focus, body .tab-content textarea:focus { border-color: #2563eb; border-bottom-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.14); }
+body .tab-content .btn-submit, body .tab-content .btn-salvar { border-radius: 8px; min-height: 40px; font-weight: 600; background: #2563eb; border-color: #2563eb; color: #fff; }
+body .tab-content .btn-submit:hover, body .tab-content .btn-salvar:hover { background: #1d4ed8; border-color: #1d4ed8; }
+body .tab-content .btn-success { border-radius: 8px; min-height: 40px; font-weight: 600; background: #059669; border-color: #059669; }
+body .tab-content .btn-danger { border-radius: 8px; font-weight: 600; background: #dc2626; border-color: #dc2626; }
+body .tab-content .btn-action, body .tab-content .btn-secondary, body .tab-content .btn-cancel, body .tab-content .btn-cancelar,
+body .tab-content button[onclick*="input-excel"] { border-radius: 8px !important; font-weight: 600 !important; font-size: 13px !important; min-height: 36px; }
+
+/* ---------- Tabelas (mesmo padrão da Temporalidade) ---------- */
+body .tab-content .table-wrapper { border: 1px solid #e2e8f0 !important; border-radius: 10px !important; background: #fff !important; box-shadow: none; overflow: auto; }
+body .tab-content th {
+    background: #f1f5f9 !important; color: #475569 !important; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px;
+    padding: 11px 14px; border-bottom: 1px solid #e2e8f0 !important; border-right: 0 !important; white-space: nowrap; }
+body .tab-content td {
+    padding: 10px 14px; border-bottom: 1px solid #eef2f7 !important; border-right: 0 !important; color: #1e293b !important;
+    vertical-align: middle; line-height: 1.45; background: transparent; }
+body .tab-content tbody tr:last-child td { border-bottom: 0 !important; }
+body .tab-content tbody tr:hover td { background-color: rgba(59,130,246,.06) !important; }
+body .tab-content td:first-child strong, body .tab-content td strong { font-weight: 700; color: #0f172a; }
+
+/* Ações em linha: quadradinhos coloridos */
+body .tab-content td .btn-icon, body .tab-content td .btn-icon-danger, body .tab-content td .btn-edit-sm {
+    display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; margin: 0 2px; border: 0; border-radius: 7px;
+    font-size: 13px; cursor: pointer; transition: filter .12s, transform .12s; }
+body .tab-content td .btn-icon { background: #e0f2fe; color: #0369a1; }
+body .tab-content td .btn-icon[onclick*="imprimir"], body .tab-content td .btn-icon[onclick*="Imprimir"] { background: #ede9fe; }
+body .tab-content td .btn-icon[onclick*="visualizar"], body .tab-content td .btn-icon[onclick*="ver"] { background: #dbeafe; }
+body .tab-content td .btn-icon-danger { background: #fee2e2; color: #dc2626; }
+body .tab-content td .btn-edit-sm { background: #e0f2fe; color: #0369a1; width: auto; padding: 0 10px; }
+body .tab-content td .btn-icon:hover, body .tab-content td .btn-icon-danger:hover, body .tab-content td .btn-edit-sm:hover { filter: brightness(.94); transform: translateY(-1px); }
+body .tab-content td:last-child:has(> .btn-icon, > .btn-icon-danger) { white-space: nowrap; }
+
+/* ---------- Selos: pílulas ---------- */
+body .tab-content .badge-info, body .tab-content .badge-success, body .tab-content .badge-purple,
+body .tab-content .badge-danger, body .tab-content .badge-warning, body .tab-content .badge-secondary {
+    display: inline-flex; align-items: center; gap: 5px; border-radius: 999px !important; padding: 3px 10px !important; font-size: 11.5px !important; font-weight: 700; white-space: nowrap; }
+
+/* ---------- Cartões de indicadores ---------- */
+body .tab-content .stat-card { border-radius: 12px !important; border: 1px solid #e2e8f0 !important; padding: 14px 16px !important; background: #fff !important; box-shadow: 0 1px 3px rgba(15,23,42,.04); }
+body .tab-content .stat-card-info h4 { font-size: 11px !important; font-weight: 700 !important; letter-spacing: .6px; text-transform: uppercase; color: #64748b !important; }
+body .tab-content .stat-card-info p { font-size: 22px; font-weight: 800 !important; color: #0f172a; }
+
+/* ---------- Barras de filtro soltas dentro das abas ---------- */
+body .tab-content .filtros-barra, body .tab-content .filter-bar { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; }
+
+
+body .tab-content td { font-size: 13px; }
+body .tab-content th, body .tab-content td { padding-left: 12px; padding-right: 12px; }
+@media (min-width: 1024px) { body .tab-content .grid-layout.split-view { grid-template-columns: 330px minmax(0, 1fr); } }
+body .tab-content .grid-layout.split-view > div { min-width: 0; }
+
+
+/* Botões .btn-action dentro de linhas de tabela viram ícones de ação */
+body .tab-content td .btn-action.danger[title] { display: inline-grid; place-items: center; width: 30px; height: 30px; min-height: 0; padding: 0 !important; margin: 0 2px;
+    border: 0 !important; border-radius: 7px !important; font-size: 13px !important; box-shadow: none; background: #e0f2fe; color: #0369a1; }
+body .tab-content td .btn-action.danger[title] { background: #fee2e2; color: #dc2626; }
+body .tab-content td .btn-action.danger[title]:hover { background: #fee2e2; color: #dc2626; filter: brightness(.94); }
+
+/* Usuários: o quadro de permissões precisa de mais largura */
+@media (min-width: 1024px) { body #tab-usuarios .grid-layout.split-view { grid-template-columns: 430px minmax(0, 1fr); } }
+/* Log: detalhes quebram linha em vez de cortar */
+body #tab-logs td:last-child { white-space: normal; min-width: 260px; }
+body #tab-logs td:nth-child(1) { white-space: nowrap; }
+
+
+/* Faixas da fila de vez: texto claro sobre o degradê */
+body .banner-vez { color: #fff; box-shadow: 0 6px 18px -8px rgba(15,23,42,.45); }
+body .banner-vez .label { opacity: .92; font-weight: 600; }
+body .banner-vez .nome { color: #fff; letter-spacing: .01em; }
+/* Células de texto quebram linha (valores monetários e datas continuam inteiros) */
+body .tab-content td { white-space: normal; }
+body .tab-content td:has(> .badge-info, > .badge-success, > .badge-danger, > .badge-warning, > .badge-purple, > .badge-secondary) { white-space: nowrap; }
+body .tab-content td:last-child:has(> .btn-icon, > .btn-icon-danger, > .btn-action, > .btn-edit-sm) { white-space: nowrap; }
+
+
+/* Coluna de ações sempre visível (fixa à direita) quando a tabela rola na horizontal */
+body .tab-content table:has(tbody td:last-child > .btn-icon, tbody td:last-child > .btn-icon-danger, tbody td:last-child > .btn-edit-sm) th:last-child,
+body .tab-content table:has(tbody td:last-child > .btn-icon, tbody td:last-child > .btn-icon-danger, tbody td:last-child > .btn-edit-sm) td:last-child {
+    position: sticky; right: 0; z-index: 3; box-shadow: -10px 0 10px -10px rgba(15,23,42,.22); }
+body .tab-content table:has(tbody td:last-child > .btn-icon, tbody td:last-child > .btn-icon-danger, tbody td:last-child > .btn-edit-sm) td:last-child { background: #fff !important; }
+body .tab-content table:has(tbody td:last-child > .btn-icon, tbody td:last-child > .btn-icon-danger, tbody td:last-child > .btn-edit-sm) tr:hover td:last-child { background: #f1f7ff !important; }
+
+/* ---------- Temporalidade: preserva o layout ajustado ---------- */
+body #tab-temporalidade { padding: 24px !important; }
+body #tabelaTemporalidade th { padding: 11px 14px; }
+body #tabelaTemporalidade td { padding: 10px 14px; }
+body #tab-temporalidade .grid-layout > div { background: transparent; border: 0; padding: 0; box-shadow: none; }
+
+/* ---------- Telas pequenas ---------- */
+@media (max-width: 1023px) {
+    body .tab-content .grid-layout.split-view > div { padding: 16px; }
+}
+</style>
+
 </body>
 </html>
