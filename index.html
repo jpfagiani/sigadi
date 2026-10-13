@@ -879,6 +879,38 @@
         #tab-temporalidade .temp-menu-lista button:hover { background: #f1f5f9; }
         #tab-temporalidade .temp-menu-lista button i { width: 16px; text-align: center; color: #64748b; }
         .tab-content.tab-somente-leitura .temp-write-only { display: none !important; }
+        /* ── Histórico de Saídas FCT: mesmo padrão da Tabela de Temporalidade ── */
+        .fct-painel { background: var(--card-bg, var(--bg)); border: 1px solid var(--border); border-radius: 10px 10px 0 0; margin-top: 6px; }
+        .fct-barra { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 12px 14px; }
+        .fct-barra h3 { margin: 0 !important; padding: 0 !important; border: 0 !important; flex: 1 1 auto; }
+        .fct-barra input, .fct-barra select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px; }
+        .fct-barra .grow { width: 220px; }
+        .fct-wrapper { max-height: calc(100vh - 260px); min-height: 220px; overflow: auto; border: 1px solid var(--border); border-top: 0; border-radius: 0 0 10px 10px; background: var(--card-bg, var(--bg)); margin-bottom: 30px; }
+        #tabelaViagens { min-width: 1190px; table-layout: fixed; }
+        #tabelaViagens td { white-space: normal; word-break: normal; overflow-wrap: break-word; vertical-align: middle; padding: 10px 10px; line-height: 1.45; }
+        #tabelaViagens th { white-space: nowrap; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; padding: 11px 10px; background: #f1f5f9; color: #475569; }
+        #tabelaViagens tbody tr:hover td { background-color: rgba(59, 130, 246, 0.06); }
+        #tabelaViagens tbody tr.fct-aberta td { background-color: rgba(254, 243, 199, 0.35); }
+        .fct-num { font: 700 13px ui-monospace, Menlo, Consolas, monospace; color: var(--text-main); white-space: nowrap; }
+        .fct-pill { display: inline-flex; align-items: center; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; margin-top: 4px; }
+        .fct-pill.ok { background: #d1fae5; color: #047857; }
+        .fct-pill.aberta { background: #fef3c7; color: #92400e; }
+        .fct-placa { display: inline-block; margin-top: 4px; padding: 2px 8px; border-radius: 6px; background: rgba(37,99,235,.1); color: #1d4ed8; font: 700 12px ui-monospace, Menlo, Consolas, monospace; letter-spacing: .3px; }
+        .fct-nome { font-weight: 700; color: var(--text-main); }
+        .fct-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+        .fct-pend { color: var(--text-muted); font-style: italic; }
+        .fct-km { font-weight: 700; color: var(--secondary); margin-top: 2px; }
+        .fct-uso { font-weight: 700; color: var(--success); margin-top: 2px; font-size: 12px; }
+        /* Ações: grade fixa de 5 colunas — mesma posição em todas as linhas */
+        #tabelaViagens .fct-acoes { display: grid; grid-template-columns: repeat(5, 28px); gap: 3px; justify-content: center; }
+        #tabelaViagens .fct-acoes .ab { width: 28px; height: 28px; padding: 0; margin: 0; border: 0; border-radius: 7px; display: grid; place-items: center; font-size: 13px; cursor: pointer; }
+        #tabelaViagens .fct-acoes .ab.g { background: #d1fae5; color: #047857; }
+        #tabelaViagens .fct-acoes .ab.p { background: #ffedd5; color: #c2410c; }
+        #tabelaViagens .fct-acoes .ab.o { background: #ede9fe; color: #6d28d9; }
+        #tabelaViagens .fct-acoes .ab.e { background: #e0f2fe; color: #0369a1; }
+        #tabelaViagens .fct-acoes .ab.d { background: #fee2e2; color: #dc2626; }
+        #tabelaViagens .fct-acoes .ab:hover { filter: brightness(.94); }
+        #tabelaViagens .fct-acoes .ab.vazio { visibility: hidden; }
         /* Gaveta lateral com o formulário */
         .temp-drawer-overlay { position: fixed; inset: 0; z-index: 5000; background: rgba(15,23,42,.55); backdrop-filter: blur(2px); justify-content: flex-end; }
         .temp-drawer { width: min(960px, 96vw); height: 100%; background: var(--bg); box-shadow: -12px 0 40px rgba(15,23,42,.25); display: flex; flex-direction: column; animation: tempDrawerIn .22s ease; }
@@ -2692,36 +2724,31 @@
             </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #e8edf4; padding: 0 0 12px; margin: 6px 0 18px;">
-            <h3 class="form-section-title" style="border: none !important; margin: 0 !important; padding: 0 !important; flex: 1 1 auto;">
-                <i class="fa-solid fa-clipboard-list"></i> Histórico de Saídas FCT
-            </h3>
-            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                <input type="month" id="filtro-mes-fct" onchange="carregarViagensNaTabela(carregarDados())" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px;">
-                <select id="filtro-placa-fct" onchange="carregarViagensNaTabela(carregarDados())" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px;">
+        <!-- Painel da tabela: título + filtros (mesmo padrão da Tabela de Temporalidade) -->
+        <div class="fct-painel">
+            <div class="fct-barra">
+                <h3 class="form-section-title"><i class="fa-solid fa-clipboard-list"></i> Histórico de Saídas FCT</h3>
+                <input type="month" id="filtro-mes-fct" onchange="carregarViagensNaTabela(carregarDados())">
+                <select id="filtro-placa-fct" onchange="carregarViagensNaTabela(carregarDados())">
                     <option value="">Todas as Placas</option>
                 </select>
-                <input type="text" id="busca-fct" placeholder="🔍 Localizar saídas..." oninput="filtrarTabelaFCT()" style="width: 200px; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background-color: var(--bg); color: var(--text-main); font-family: inherit; font-size: 13px;">
+                <input type="text" id="busca-fct" class="grow" placeholder="🔍 Localizar saídas..." oninput="filtrarTabelaFCT()">
             </div>
         </div>
 
-        <div class="table-wrapper" style="margin-bottom: 30px; max-height: 400px; overflow-y: auto;">
+        <div class="table-wrapper fct-wrapper">
             <table id="tabelaViagens">
                 <thead>
                     <tr>
-                        <th>FCT</th>
-                        <th>Data</th>
-                        <th>Motorista</th>
-                        <th>Viatura (Placa)</th>
-                        <th>Destino</th>
-                        <th>Serviço</th>
-                        <th>KM Inicial</th>
-                        <th>KM Final</th>
-                        <th>KM Rodado</th>
-                        <th>Hora Saída</th>
-                        <th>Hora Chegada</th>
-                        <th>Tempo de Uso</th>
-                        <th>Ações</th>
+                        <th style="width:125px;">FCT</th>
+                        <th style="width:90px;">Data</th>
+                        <th style="width:140px;">Motorista</th>
+                        <th style="width:165px;">Viatura</th>
+                        <th style="width:135px;">Destino</th>
+                        <th style="width:135px;">Serviço</th>
+                        <th style="width:115px;">Quilometragem</th>
+                        <th style="width:115px;">Horário</th>
+                        <th style="text-align:center; width:172px;">Ações</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -6309,7 +6336,7 @@
         document.getElementById('stat-frota-count').innerText = dados.viaturas.length + (dados.viaturas.length === 1 ? " Veículo" : " Veículos");
 
         if (filteredViagens.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="13" style="text-align: center; color: var(--text-muted);">Nenhum registro de saída para este mês.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted);">Nenhum registro de saída para este mês.</td></tr>`;
             return;
         }
 
@@ -6336,46 +6363,41 @@
             const tr = document.createElement('tr');
             const isAberta = v.status === 'Aberta';
             
-            const badgeStatus = isAberta 
-                ? `<span class="badge-warning" style="background-color: #fef3c7; color: #d97706; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 4px;">Aberta</span>`
-                : `<span class="badge-success" style="background-color: #d1fae5; color: #059669; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 4px;">Concluída</span>`;
-
-            const displayData = isAberta 
-                ? v.data 
-                : (v.dataChegada && v.dataChegada !== v.data ? `${v.data} - ${v.dataChegada}` : v.data);
-
-            const displayKmFinal = isAberta ? `<span style="color: var(--text-muted); font-style: italic;">Pendente</span>` : v.kmFinal;
-            const displayKmRodado = isAberta ? `<span style="color: var(--text-muted); font-style: italic;">Pendente</span>` : `${v.kmRodado} KM`;
-            const displayHoraChegada = isAberta ? `<span style="color: var(--text-muted); font-style: italic;">Pendente</span>` : v.horaChegada;
-            const displayTempoUso = isAberta ? `<span style="color: var(--text-muted); font-style: italic;">Pendente</span>` : v.tempoUso;
-
-            // Reserva o espaço do botão mesmo quando ele não aparece (viagem
-            // já concluída) — senão os ícones seguintes (imprimir, ordem de
-            // saída, editar, excluir) deslizam para a esquerda e desalinham
-            // essa coluna entre uma linha e outra.
+            const E = _escTemp;
+            const pend = `<span class="fct-pend">Pendente</span>`;
+            const pill = isAberta ? `<span class="fct-pill aberta">Aberta</span>` : `<span class="fct-pill ok">Concluída</span>`;
+            const dataHtml = (!isAberta && v.dataChegada && v.dataChegada !== v.data)
+                ? `<div>${E(v.data)}</div><div class="fct-sub">até ${E(v.dataChegada)}</div>`
+                : E(v.data);
+            const kmHtml = isAberta
+                ? `<div>${E(v.kmInicial)} → ${pend}</div>`
+                : `<div>${E(v.kmInicial)} → ${E(v.kmFinal)}</div><div class="fct-km">${E(v.kmRodado)} KM</div>`;
+            const horaHtml = isAberta
+                ? `<div>${E(v.horaSaida)} → ${pend}</div>`
+                : `<div>${E(v.horaSaida)} → ${E(v.horaChegada)}</div>${v.tempoUso ? `<div class="fct-uso">${E(v.tempoUso)}</div>` : ''}`;
+            const veic = [v.veiculo, v.modelo ? `(${v.modelo})` : ''].filter(Boolean).join(' ');
+            tr.className = isAberta ? 'fct-aberta' : '';
             const btnEncerrar = isAberta
-                ? `<button class="btn-icon" onclick="abrirModalEncerrarFCT(${v.id})" title="Encerrar Viagem" style="color: var(--success);"><i class="fa-solid fa-flag-checkered"></i></button>`
-                : `<button class="btn-icon" style="visibility: hidden;" tabindex="-1" aria-hidden="true"><i class="fa-solid fa-flag-checkered"></i></button>`;
+                ? `<button type="button" class="btn-icon ab g" onclick="abrirModalEncerrarFCT(${v.id})" title="Encerrar viagem"><i class="fa-solid fa-flag-checkered"></i></button>`
+                : `<button type="button" class="ab vazio" tabindex="-1" aria-hidden="true"></button>`;
 
             tr.innerHTML = `
-                <td><strong>${v.fct}</strong> ${badgeStatus}</td>
-                <td>${displayData}</td>
-                <td><strong>${v.motorista}</strong></td>
-                <td><div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;"><span>${v.veiculo} (${v.modelo})</span><span class="badge-info" style="flex-shrink: 0;">${v.placa}</span></div></td>
-                <td>${v.destino}</td>
-                <td>${v.tipoServico}</td>
-                <td>${v.kmInicial}</td>
-                <td>${displayKmFinal}</td>
-                <td style="font-weight: bold; color: var(--secondary);">${displayKmRodado}</td>
-                <td>${v.horaSaida}</td>
-                <td>${displayHoraChegada}</td>
-                <td style="font-weight: bold; color: var(--success);">${displayTempoUso}</td>
-                <td style="text-align: center; white-space: nowrap;">
-                    ${btnEncerrar}
-                    <button class="btn-icon" onclick="imprimirFCT(${v.id})" title="Imprimir FCT" style="color: var(--accent);"><i class="fa-solid fa-print"></i></button>
-                    <button class="btn-icon" onclick="imprimirOrdemSaida(${v.id})" title="Ordem de Saída de Viatura" style="color: var(--secondary);"><i class="fa-solid fa-right-from-bracket"></i></button>
-                    <button class="btn-icon" onclick="abrirModalEditarViagemFCT(${v.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                    <button class="btn-icon-danger" onclick="deletarViagemFCT(${v.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                <td><div class="fct-num">${E(v.fct)}</div>${pill}</td>
+                <td>${dataHtml}</td>
+                <td><span class="fct-nome">${E(v.motorista)}</span></td>
+                <td><div>${E(veic)}</div><span class="fct-placa">${E(v.placa)}</span></td>
+                <td>${E(v.destino)}</td>
+                <td>${E(v.tipoServico)}</td>
+                <td>${kmHtml}</td>
+                <td>${horaHtml}</td>
+                <td>
+                    <div class="fct-acoes">
+                        ${btnEncerrar}
+                        <button type="button" class="btn-icon ab p" onclick="imprimirFCT(${v.id})" title="Imprimir FCT"><i class="fa-solid fa-print"></i></button>
+                        <button type="button" class="btn-icon ab o" onclick="imprimirOrdemSaida(${v.id})" title="Ordem de saída de viatura"><i class="fa-solid fa-right-from-bracket"></i></button>
+                        <button type="button" class="btn-icon ab e" onclick="abrirModalEditarViagemFCT(${v.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                        <button type="button" class="btn-icon-danger ab d" onclick="deletarViagemFCT(${v.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -26049,7 +26071,6 @@ function carregarTabelaOleo(dados) {
         }
 
         try { atualizarUsuarioShell(); const _a = document.querySelector('.tab-content.active'); if (_a) atualizarShellApp(_a.id); } catch (e) {}
-        try { entrarTelaCheia(); } catch (e) {}
 
         // Limpar login form
         document.getElementById('loginUser').value = '';
